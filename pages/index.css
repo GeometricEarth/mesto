@@ -6,5 +6,15 @@
 @import url("../blocks/header/__logo/header__logo.css");
 
 @import url("../blocks/profile/profile.css");
+@import url("../blocks/profile/__avatar/profile__avatar.css");
+@import url("../blocks/profile/__info/profile__info.css");
+@import url("../blocks/profile/__form/priofile__form.css");
+@import url("../blocks/profile/__user-name/profile__user-name.css");
+@import url("../blocks/profile/__profession/profile__profession.css");
+
+@import url("../blocks/button/button.css");
+@import url("../blocks/button/_type/button_type_edit.css");
+@import url("../blocks/button/_type/button_type_add.css");
+
 @import url("../blocks/image-gallery/image-gallery.css");
 @import url("../blocks/footer/footer.css");
