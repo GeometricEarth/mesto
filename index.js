@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", mount);
 let editButton = document.querySelector(".button_type_edit");
 let submitButton = document.querySelector(".button_type_submit");
 let closeButton = document.querySelector(".button_type_close");
+let likeButtonArray = document.querySelectorAll(".card__like-button");
 let popUp = document.querySelector(".popup");
 let avatar = document.querySelector(".profile__avatar");
 let userName = document.querySelector(".profile__user-name");
@@ -53,6 +54,14 @@ submitButton.addEventListener("click", (event) => {
 closeButton.addEventListener("click", (event) => {
   event.preventDefault();
   togglePoUp(popUp);
+});
+
+/*Визуальное отображение иконки с активированным лайком*/
+likeButtonArray.forEach((element) => {
+  element.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.target.classList.toggle("card__like-button_active");
+  });
 });
 
 function mount() {
