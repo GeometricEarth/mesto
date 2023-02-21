@@ -26,38 +26,46 @@ const user = {
 
 document.addEventListener("DOMContentLoaded", mount);
 
-let editButton = document.querySelector(".button_type_edit");
-let submitButton = document.querySelector(".button_type_submit");
-let closeButton = document.querySelector(".button_type_close");
-let likeButtonArray = document.querySelectorAll(".card__like-button");
-let popUp = document.querySelector(".popup");
-let avatar = document.querySelector(".profile__avatar");
-let userName = document.querySelector(".profile__user-name");
-let userOccupation = document.querySelector(".profile__occupation");
-let fildUserName = document.querySelector(".fild_user-name");
-let fildOccupation = document.querySelector(".fild_occupation");
+const profile = document.querySelector(".profile");
+const userName = profile.querySelector(".profile__user-name");
+const userOccupation = profile.querySelector(".profile__occupation");
+const avatar = profile.querySelector(".profile__avatar");
+const editButton = profile.querySelector(".button_type_edit");
+
+const likeButtonsCollection = document.querySelectorAll(".card__like-button"); //static collection NodeList
+
+const popUp = document.querySelector(".popup");
+const popUpForm = popUp.querySelector(".popup__container");
+const submitButton = popUpForm.querySelector(".button_type_submit");
+const closeButton = popUpForm.querySelector(".button_type_close");
+const formInputsCollection = popUpForm.elements;
 
 editButton.addEventListener("click", (event) => {
   event.preventDefault();
-  fildOccupation.value = user.occupation;
-  fildUserName.value = user.name;
-  togglePoUp(popUp);
+  formInputsCollection.userOccupation.value = user.occupation;
+  formInputsCollection.userName.value = user.name;
+  togglePopUp(popUp);
 });
 
-submitButton.addEventListener("click", (event) => {
+popUpForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  user.name = fildUserName.value;
-  user.occupation = fildOccupation.value;
-  togglePoUp(popUp);
+
+  user.name = formInputsCollection.userName.value;
+  user.occupation = formInputsCollection.userOccupation.value;
+  togglePopUp(popUp);
 });
 
 closeButton.addEventListener("click", (event) => {
   event.preventDefault();
-  togglePoUp(popUp);
+  togglePopUp(popUp);
 });
 
-/*Визуальное отображение иконки с активированным лайком*/
-likeButtonArray.forEach((element) => {
+/**Прототип отображения лайков в глаерее.
+ *Тут мы обрабатываем статический NodeList.
+ *при динамическом добавлении элементов это вызвет проблемы.
+ * @todo заменить при динамическом добавлении элементов
+ */
+likeButtonsCollection.forEach((element) => {
   element.addEventListener("click", (event) => {
     event.preventDefault();
     event.target.classList.toggle("card__like-button_active");
@@ -70,6 +78,6 @@ function mount() {
   userOccupation.insertAdjacentText("beforeend", user.occupation);
 }
 
-function togglePoUp(element) {
+function togglePopUp(element) {
   element.classList.toggle("popup_opened");
 }
