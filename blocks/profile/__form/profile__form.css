@@ -1,11 +1,11 @@
-.priofile__form {
+.profile__form {
   display: flex;
   align-items: baseline;
   gap: 18px;
 }
 
 @media (max-width: 550px) {
-  .priofile__form {
+  .profile__form {
     gap: 10px;
   }
 }

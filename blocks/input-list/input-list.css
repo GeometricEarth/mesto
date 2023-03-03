@@ -1,4 +1,4 @@
-.fild__list {
+.input-list {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -6,7 +6,7 @@
 }
 
 @media (max-width: 550px) {
-  .fild__list {
+  .input-list {
     margin-top: 75px;
   }
 }
