@@ -6,7 +6,8 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 22px 22px;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
+  border-radius: 2px;
 }
 
 @media (max-width: 550px) {
