@@ -62,27 +62,7 @@
         </div>
         <button type="button" class="button button_type_add"></button>
       </section>
-      <div class="popup">
-        <form action="#" class="popup__container">
-          <h2 class="popup__title">Редактировать профиль</h2>
-          <ul class="input-list">
-            <li class="input-list__item">
-              <input type="text" class="fild fild_type_name" name="userName" />
-            </li>
-            <li class="input-list__item">
-              <input
-                type="text"
-                class="fild fild_type_occupation"
-                name="userOccupation"
-              />
-            </li>
-          </ul>
-          <button type="submit" class="button button_type_submit">
-            Сохранить
-          </button>
-          <button class="button button_type_close"></button>
-        </form>
-      </div>
+
       <section class="gallery">
         <ul class="card-list">
           <li class="card">
@@ -153,10 +133,32 @@
           </li>
         </ul>
       </section>
+
       <footer class="footer">
         <p class="footer__copyright">© 2020 Mesto Russia</p>
       </footer>
     </main>
+    <div class="popup">
+      <form action="#" class="popup__container">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <ul class="input-list">
+          <li class="input-list__item">
+            <input type="text" class="fild fild_type_name" name="userName" />
+          </li>
+          <li class="input-list__item">
+            <input
+              type="text"
+              class="fild fild_type_occupation"
+              name="userOccupation"
+            />
+          </li>
+        </ul>
+        <button type="submit" class="button button_type_submit">
+          Сохранить
+        </button>
+        <button class="button button_type_close"></button>
+      </form>
+    </div>
     <script src="./index.js"></script>
   </body>
 </html>
