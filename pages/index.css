@@ -17,9 +17,9 @@
 @import url("../blocks/popup/_opened/popup_opened.css");
 @import url("../blocks/popup/__container/popup__container.css");
 @import url("../blocks/popup/__title/popup__title.css");
-@import url("../blocks/input-list/input-list.css");
-@import url("../blocks/input-list/__item/input-list__item.css");
-@import url("../blocks/fild/fild.css");
+@import url("../blocks/popup/__fild-list/popup__fild-list.css");
+@import url("../blocks/popup/__fild-list-element/popup__fild-list-element.css");
+@import url("../blocks/popup/__fild/popup__fild.css");
 
 @import url("../blocks/button/button.css");
 @import url("../blocks/button/_type/button_type_edit.css");

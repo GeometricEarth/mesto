@@ -1,4 +1,4 @@
-.input-list {
+.popup__fild-list {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -6,7 +6,7 @@
 }
 
 @media (max-width: 550px) {
-  .input-list {
+  .popup__fild-list {
     margin-top: 75px;
   }
 }
