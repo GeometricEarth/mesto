@@ -12,7 +12,9 @@ const userNameModalFild = profileModalForm.userName;
 
 editProfileButton.addEventListener('click', showEditProfileModal);
 profileModalForm.addEventListener('submit', editProfile);
-profileModalCloseButton.addEventListener('click', closeProfileModal);
+profileModalCloseButton.addEventListener('click', () => {
+  togglePopUp(profileModal);
+});
 
 function togglePopUp(element) {
   element.classList.toggle('popup_opened');
@@ -29,10 +31,5 @@ function editProfile(event) {
   event.preventDefault();
   userName.textContent = userNameModalFild.value;
   userOccupation.textContent = userOccupationModalFild.value;
-  togglePopUp(profileModal);
-}
-
-function closeProfileModal(event) {
-  event.preventDefault();
   togglePopUp(profileModal);
 }
