@@ -16,10 +16,14 @@
 @import url("../blocks/popup/popup.css");
 @import url("../blocks/popup/_opened/popup_opened.css");
 @import url("../blocks/popup/__container/popup__container.css");
+@import url("../blocks/popup/__form/popup__form.css");
 @import url("../blocks/popup/__title/popup__title.css");
 @import url("../blocks/popup/__field-list/popup__field-list.css");
 @import url("../blocks/popup/__field-list-element/popup__field-list-element.css");
 @import url("../blocks/popup/__field/popup__field.css");
+@import url("../blocks/popup/__enlarged-image/popup__enlarged-image.css");
+@import url("../blocks/popup/_type/popup_type_image-scaling.css");
+@import url("../blocks/popup/__place-title/popup__place-title.css");
 
 @import url("../blocks/button/button.css");
 @import url("../blocks/button/_type/button_type_edit.css");

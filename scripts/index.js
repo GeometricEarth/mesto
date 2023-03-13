@@ -30,7 +30,7 @@ const userName = profile.querySelector('.profile__user-name');
 const userOccupation = profile.querySelector('.profile__occupation');
 const editProfileButton = profile.querySelector('.button_type_edit');
 
-const profileModal = document.querySelector('.popup');
+const profileModal = document.querySelector('.popup_type_edit-profile');
 const profileModalCloseButton =
   profileModal.querySelector('.button_type_close');
 const profileModalForm = document.forms.profileModalForm;
@@ -40,11 +40,19 @@ const userNameModalFild = profileModalForm.userName;
 const templateCard = document.querySelector('#templateCard').content;
 const galleryContainer = document.querySelector('.gallery__card-list');
 
+const scalingPopup = document.querySelector('.popup_type_image-scaling');
+const scalingPopupCloseButton =
+  scalingPopup.querySelector('.button_type_close');
+
 editProfileButton.addEventListener('click', showEditProfileModal);
 profileModalForm.addEventListener('submit', editProfile);
 profileModalCloseButton.addEventListener('click', () => {
   togglePopUp(profileModal);
 });
+
+scalingPopupCloseButton.addEventListener('click', () =>
+  togglePopUp(scalingPopup)
+);
 
 function togglePopUp(element) {
   element.classList.toggle('popup_opened');
@@ -82,7 +90,18 @@ function addCard(item) {
     .addEventListener('click', (pointer) => {
       pointer.target.classList.toggle('card__like-button_active');
     });
+  cardElement
+    .querySelector('.card__image')
+    .addEventListener('click', () => openScalingPopup(item));
   galleryContainer.prepend(cardElement);
+}
+
+function openScalingPopup(item) {
+  const enlargedImage = scalingPopup.querySelector('.popup__enlarged-image');
+  enlargedImage.setAttribute('src', item.link);
+  enlargedImage.setAttribute('alt', item.name);
+  scalingPopup.querySelector('.popup__place-title').innerText = item.name;
+  togglePopUp(scalingPopup);
 }
 
 renderDefaultCards(initialCards);
