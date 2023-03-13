@@ -72,6 +72,16 @@ function addCard(item) {
   const cardElement = templateCard.cloneNode(true);
   cardElement.querySelector('.card__image').setAttribute('src', item.link);
   cardElement.querySelector('.card__title').innerText = item.name;
+  cardElement
+    .querySelector('.button_type_delite')
+    .addEventListener('click', (pointer) => {
+      pointer.target.parentNode.remove();
+    });
+  cardElement
+    .querySelector('.card__like-button')
+    .addEventListener('click', (pointer) => {
+      pointer.target.classList.toggle('card__like-button_active');
+    });
   galleryContainer.prepend(cardElement);
 }
 
