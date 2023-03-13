@@ -26,6 +26,7 @@
 @import url("../blocks/button/_type/button_type_add.css");
 @import url("../blocks/button/_type/button_type_submit.css");
 @import url("../blocks/button/_type/button_type_close.css");
+@import url("../blocks/button/_type/button_type_delite.css");
 
 @import url("../blocks/gallery/gallery.css");
 @import url("../blocks/gallery/__card-list/gallery__card-list.css");
