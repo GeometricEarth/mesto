@@ -116,6 +116,41 @@
       </div>
     </div>
 
+    <div class="popup popup_type_add-place">
+      <div class="popup__container">
+        <form action="#" name="newPlaceForm" class="popup__form">
+          <h2 class="popup__title">Новое место</h2>
+          <ul class="popup__field-list">
+            <li class="popup__field-list-element">
+              <input
+                type="text"
+                class="popup__field"
+                name="placeName"
+                required
+                placeholder="Название"
+              />
+            </li>
+            <li class="popup__field-list-element">
+              <input
+                type="text"
+                class="popup__field"
+                name="placeImage"
+                required
+                placeholder="Ссылка на картинку"
+              />
+            </li>
+          <button type="submit" class="button button_type_submit">
+            Сохранить
+          </button>
+        </form>
+        <button
+          type="button"
+          class="button button_type_close"
+          aria-label="закрыть модальное окно"
+        ></button>
+      </div>
+    </div>
+
     <div class="popup popup_type_image-scaling">
       <div class="popup__container">
         <img class="popup__enlarged-image" />

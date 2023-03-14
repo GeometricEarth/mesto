@@ -40,9 +40,17 @@ const userNameModalFild = profileModalForm.userName;
 const templateCard = document.querySelector('#templateCard').content;
 const galleryContainer = document.querySelector('.gallery__card-list');
 
-const scalingPopup = document.querySelector('.popup_type_image-scaling');
-const scalingPopupCloseButton =
-  scalingPopup.querySelector('.button_type_close');
+const enlargedImagePopup = document.querySelector('.popup_type_image-scaling');
+const closeEnlargedImagePopupButton =
+  enlargedImagePopup.querySelector('.button_type_close');
+
+const newPlacePopup = document.querySelector('.popup_type_add-place');
+const newPlaceForm = document.forms.newPlaceForm;
+const showNewPlacePopupButton = profile.querySelector('.button_type_add');
+const closeNewPlacePopupButton =
+  newPlacePopup.querySelector('.button_type_close');
+const placeNameField = newPlaceForm.placeName;
+const placeImageField = newPlaceForm.placeImage;
 
 editProfileButton.addEventListener('click', showEditProfileModal);
 profileModalForm.addEventListener('submit', editProfile);
@@ -50,8 +58,16 @@ profileModalCloseButton.addEventListener('click', () => {
   togglePopUp(profileModal);
 });
 
-scalingPopupCloseButton.addEventListener('click', () =>
-  togglePopUp(scalingPopup)
+showNewPlacePopupButton.addEventListener('click', () =>
+  togglePopUp(newPlacePopup)
+);
+closeNewPlacePopupButton.addEventListener('click', () =>
+  togglePopUp(newPlacePopup)
+);
+newPlaceForm.addEventListener('submit', addNewPlace);
+
+closeEnlargedImagePopupButton.addEventListener('click', () =>
+  togglePopUp(enlargedImagePopup)
 );
 
 function togglePopUp(element) {
@@ -79,6 +95,7 @@ function renderDefaultCards(elementsArray) {
 function addCard(item) {
   const cardElement = templateCard.cloneNode(true);
   cardElement.querySelector('.card__image').setAttribute('src', item.link);
+  cardElement.querySelector('.card__image').setAttribute('alt', item.name);
   cardElement.querySelector('.card__title').innerText = item.name;
   cardElement
     .querySelector('.button_type_delite')
@@ -92,16 +109,29 @@ function addCard(item) {
     });
   cardElement
     .querySelector('.card__image')
-    .addEventListener('click', () => openScalingPopup(item));
+    .addEventListener('click', () => showEnlargedImagePopup(item));
   galleryContainer.prepend(cardElement);
 }
 
-function openScalingPopup(item) {
-  const enlargedImage = scalingPopup.querySelector('.popup__enlarged-image');
+function showEnlargedImagePopup(item) {
+  const enlargedImage = enlargedImagePopup.querySelector(
+    '.popup__enlarged-image'
+  );
   enlargedImage.setAttribute('src', item.link);
   enlargedImage.setAttribute('alt', item.name);
-  scalingPopup.querySelector('.popup__place-title').innerText = item.name;
-  togglePopUp(scalingPopup);
+  enlargedImagePopup.querySelector('.popup__place-title').innerText = item.name;
+  togglePopUp(enlargedImagePopup);
+}
+
+function addNewPlace(event) {
+  event.preventDefault();
+  const newPlace = {};
+  newPlace.name = placeNameField.value;
+  newPlace.link = placeImageField.value;
+
+  addCard(newPlace);
+
+  togglePopUp(newPlacePopup);
 }
 
 renderDefaultCards(initialCards);
