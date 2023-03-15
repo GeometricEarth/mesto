@@ -72,98 +72,7 @@
       </section>
 
       <section class="gallery">
-        <ul class="gallery__card-list">
-          <li class="card">
-            <img
-              src="./images/kirill-pershin-1088404-unsplash.jpg"
-              alt="Карачаевск"
-              class="card__image"
-            />
-            <div class="card__body">
-              <h2 class="card__title">Карачаевск</h2>
-              <button
-                type="button"
-                class="button card__like-button"
-                aria-label="отметка нравиться"
-              ></button>
-            </div>
-          </li>
-          <li class="card">
-            <img
-              src="./images/kirill-pershin-1404681-unsplash.jpg"
-              alt="Гора Эльбрус"
-              class="card__image"
-            />
-            <div class="card__body">
-              <h2 class="card__title">Гора Эльбрус</h2>
-              <button
-                type="button"
-                class="button card__like-button"
-                aria-label="отметка нравиться"
-              ></button>
-            </div>
-          </li>
-          <li class="card">
-            <img
-              src="./images/kirill-pershin-1556355-unsplash.jpg"
-              alt="Домбай"
-              class="card__image"
-            />
-            <div class="card__body">
-              <h2 class="card__title">Домбай</h2>
-              <button
-                type="button"
-                class="button card__like-button"
-                aria-label="отметка нравиться"
-              ></button>
-            </div>
-          </li>
-          <li class="card">
-            <img
-              src="./images/kirill-pershin-1404681-unsplash.jpg"
-              alt="Гора Эльбрус"
-              class="card__image"
-            />
-            <div class="card__body">
-              <h2 class="card__title">Гора Эльбрус</h2>
-              <button
-                type="button"
-                class="button card__like-button"
-                aria-label="отметка нравиться"
-              ></button>
-            </div>
-          </li>
-          <li class="card">
-            <img
-              src="./images/kirill-pershin-1556355-unsplash.jpg"
-              alt="Домбай"
-              class="card__image"
-            />
-            <div class="card__body">
-              <h2 class="card__title">Домбай</h2>
-              <button
-                type="button"
-                class="button card__like-button"
-                aria-label="отметка нравиться"
-              ></button>
-            </div>
-          </li>
-          <li class="card">
-            <img
-              src="./images/kirill-pershin-1088404-unsplash.jpg"
-              alt="Карачаево-Черкесия"
-              class="card__image"
-            />
-            <div class="card__body">
-              <h2 class="card__title">Карачаево-Черкесия</h2>
-              <button
-                type="button"
-                class="button card__like-button"
-                aria-label="отметка нравиться"
-              ></button>
-            </div>
-          </li>
-        </ul>
+        <ul class="gallery__card-list"></ul>
       </section>
     </main>
 
@@ -171,9 +80,9 @@
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
 
-    <div class="popup">
+    <div class="popup popup_type_edit-profile">
       <div class="popup__container">
-        <form action="#" name="profileModalForm" class="popup__profile-form">
+        <form action="#" name="profileModalForm" class="popup__form">
           <h2 class="popup__title">Редактировать профиль</h2>
           <ul class="popup__field-list">
             <li class="popup__field-list-element">
@@ -206,6 +115,69 @@
         ></button>
       </div>
     </div>
+
+    <div class="popup popup_type_add-place">
+      <div class="popup__container">
+        <form action="#" name="newPlaceForm" class="popup__form">
+          <h2 class="popup__title">Новое место</h2>
+          <ul class="popup__field-list">
+            <li class="popup__field-list-element">
+              <input
+                type="text"
+                class="popup__field"
+                name="placeName"
+                required
+                placeholder="Название"
+              />
+            </li>
+            <li class="popup__field-list-element">
+              <input
+                type="text"
+                class="popup__field"
+                name="placeImage"
+                required
+                placeholder="Ссылка на картинку"
+              />
+            </li>
+          </ul>
+          <button type="submit" class="button button_type_submit">
+            Создать
+          </button>
+        </form>
+        <button
+          type="button"
+          class="button button_type_close"
+          aria-label="закрыть модальное окно"
+        ></button>
+      </div>
+    </div>
+
+    <div class="popup popup_type_image-scaling">
+      <div class="popup__container">
+        <img src="/" alt="" class="popup__enlarged-image" />
+        <p class="popup__place-title"></p>
+        <button
+          type="button"
+          class="button button_type_close"
+          aria-label="закрыть модальное окно"
+        ></button>
+      </div>
+    </div>
+
+    <template id="templateCard">
+      <li class="card">
+        <img class="card__image" />
+        <div class="card__body">
+          <h2 class="card__title"></h2>
+          <button
+            type="button"
+            class="button card__like-button"
+            aria-label="отметка нравиться"
+          ></button>
+        </div>
+        <button type="button" class="button button_type_delite"></button>
+      </li>
+    </template>
     <script src="./scripts/index.js"></script>
   </body>
 </html>
