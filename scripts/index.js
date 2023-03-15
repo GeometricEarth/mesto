@@ -1,30 +1,3 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-  },
-];
-
 const profile = document.querySelector('.profile');
 const userName = profile.querySelector('.profile__user-name');
 const userOccupation = profile.querySelector('.profile__occupation');
@@ -89,28 +62,34 @@ function editProfile(event) {
 }
 
 function renderDefaultCards(elementsArray) {
-  initialCards.forEach((item) => addCard(item));
+  initialCards.forEach((item) => renderCard(item));
 }
 
-function addCard(item) {
+function renderCard(item) {
+  const card = createCard(item);
+  galleryContainer.prepend(card);
+}
+
+function createCard(item) {
   const cardElement = templateCard.cloneNode(true);
-  cardElement.querySelector('.card__image').setAttribute('src', item.link);
-  cardElement.querySelector('.card__image').setAttribute('alt', item.name);
+  const cardImage = cardElement.querySelector('.card__image');
+  cardImage.setAttribute('alt', item.name);
+  cardImage.setAttribute('src', item.link);
+
   cardElement.querySelector('.card__title').innerText = item.name;
+
   cardElement
     .querySelector('.button_type_delite')
-    .addEventListener('click', (pointer) => {
-      pointer.target.parentNode.remove();
-    });
+    .addEventListener('click', handleRemoveCard);
+
   cardElement
     .querySelector('.card__like-button')
-    .addEventListener('click', (pointer) => {
-      pointer.target.classList.toggle('card__like-button_active');
-    });
+    .addEventListener('click', handleLikeCard);
+
   cardElement
     .querySelector('.card__image')
     .addEventListener('click', () => showEnlargedImagePopup(item));
-  galleryContainer.prepend(cardElement);
+  return cardElement;
 }
 
 function showEnlargedImagePopup(item) {
@@ -129,9 +108,17 @@ function addNewPlace(event) {
   newPlace.name = placeNameField.value;
   newPlace.link = placeImageField.value;
 
-  addCard(newPlace);
+  renderCard(newPlace);
 
   togglePopUp(newPlacePopup);
+}
+
+function handleRemoveCard(event) {
+  event.target.closest('.card');
+}
+
+function handleLikeCard(event) {
+  event.target.classList.toggle('card__like-button_active');
 }
 
 renderDefaultCards(initialCards);
