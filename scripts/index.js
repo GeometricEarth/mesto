@@ -37,7 +37,7 @@ showNewPlacePopupButton.addEventListener('click', () =>
 closeNewPlacePopupButton.addEventListener('click', () =>
   togglePopUp(newPlacePopup)
 );
-newPlaceForm.addEventListener('submit', addNewPlace);
+newPlaceForm.addEventListener('submit', handleAddPlace);
 
 closeEnlargedImagePopupButton.addEventListener('click', () =>
   togglePopUp(enlargedImagePopup)
@@ -102,7 +102,7 @@ function showEnlargedImagePopup(item) {
   togglePopUp(enlargedImagePopup);
 }
 
-function addNewPlace(event) {
+function handleAddPlace(event) {
   event.preventDefault();
   const newPlace = {};
   newPlace.name = placeNameField.value;
@@ -114,7 +114,7 @@ function addNewPlace(event) {
 }
 
 function handleRemoveCard(event) {
-  event.target.closest('.card');
+  event.target.closest('.card').remove();
 }
 
 function handleLikeCard(event) {
