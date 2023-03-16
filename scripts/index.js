@@ -3,8 +3,6 @@ const userName = profile.querySelector('.profile__user-name');
 const userOccupation = profile.querySelector('.profile__occupation');
 const buttonEditingProfile = profile.querySelector('.button_type_edit');
 
-const listCloseButtons = document.querySelectorAll('.button_type_close');
-
 const profilePopup = document.querySelector('.popup_type_edit-profile');
 const buttonCloseProfileModal =
   profilePopup.querySelector('.button_type_close');
