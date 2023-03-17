@@ -91,10 +91,6 @@ function handleAddPlace(event) {
   closePopup(newPlacePopup);
 }
 
-function handleRemoveCard(event) {
-  event.target.closest('.card').remove();
-}
-
 function handleLikeCard(event) {
   event.target.classList.toggle('card__like-button_active');
 }
