@@ -91,18 +91,6 @@ function handleAddPlace(event) {
   closePopup(newPlacePopup);
 }
 
-function handleLikeCard(event) {
-  event.target.classList.toggle('card__like-button_active');
-}
-
-function openPopup(element) {
-  element.classList.add('popup_opened');
-}
-
-function closePopup(element) {
-  element.classList.remove('popup_opened');
-}
-
 function handleRemoveCard(event) {
   event.target.closest('.card').remove();
 }
@@ -115,9 +103,8 @@ function openPopup(element) {
   element.classList.add('popup_opened');
 }
 
-function handleClosePopup(event) {
-  const popup = event.target.closest('.popup');
-  popup.classList.remove('popup_opened');
+function closePopup(element) {
+  element.classList.remove('popup_opened');
 }
 
 renderDefaultCards(initialCards);
