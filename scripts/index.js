@@ -3,6 +3,8 @@ const userName = profile.querySelector('.profile__user-name');
 const userOccupation = profile.querySelector('.profile__occupation');
 const buttonEditingProfile = profile.querySelector('.button_type_edit');
 
+const popupList = document.querySelectorAll('.popup');
+
 const profilePopup = document.querySelector('.popup_type_edit-profile');
 const buttonCloseProfileModal = profilePopup.querySelector('.button_type_close');
 const profileModalForm = document.forms.profileModalForm;
@@ -92,13 +94,34 @@ function handleLikeCard(event) {
 
 function openPopup(element) {
   element.classList.add('popup_opened');
+  document.addEventListener('keydown', handleEscapeKeyListener);
 }
 
 function closePopup(element) {
   element.classList.remove('popup_opened');
+  document.removeEventListener('keydown', handleEscapeKeyListener);
+}
+function hasTargetClassName(element, targetClassName) {
+  const classList = Array.from(element.classList);
+  return classList.some((className) => {
+    return className === targetClassName;
+  });
+}
+function handleEscapeKeyListener(evt) {
+  if (evt.key === 'Escape') {
+    popupList.forEach((element) => {
+      closePopup(element);
+    });
+  }
 }
 
 renderDefaultCards(initialCards);
+
+popupList.forEach((element) => {
+  element.addEventListener('click', (event) => {
+    if (hasTargetClassName(event.target, 'popup')) closePopup(element);
+  });
+});
 
 buttonCloseProfileModal.addEventListener('click', () => {
   closePopup(profilePopup);
