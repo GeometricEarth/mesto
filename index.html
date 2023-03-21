@@ -7,52 +7,23 @@
     <title>Mesto</title>
     <link rel="stylesheet" href="./pages/index.css" />
 
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="./images/favicon/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="./images/favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="./images/favicon/favicon-16x16.png"
-    />
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png" />
     <link rel="manifest" href="./images/favicon/site.webmanifest" />
-    <link
-      rel="mask-icon"
-      href="./images/favicon/safari-pinned-tab.svg"
-      color="#3aa4c2"
-    />
+    <link rel="mask-icon" href="./images/favicon/safari-pinned-tab.svg" color="#3aa4c2" />
     <link rel="shortcut icon" href="./images/favicon/favicon.ico" />
     <meta name="msapplication-TileColor" content="#333333" />
-    <meta
-      name="msapplication-config"
-      content="./images/favicon/browserconfig.xml"
-    />
+    <meta name="msapplication-config" content="./images/favicon/browserconfig.xml" />
     <meta name="theme-color" content="#333333" />
   </head>
   <body class="page">
     <header class="header">
-      <img
-        src="./images/header__logo.svg"
-        alt="Логотип 'Место Россия'"
-        class="header__logo"
-      />
+      <img src="./images/header__logo.svg" alt="Логотип 'Место Россия'" class="header__logo" />
     </header>
     <main class="page-content">
       <section class="profile">
-        <img
-          src="./images/profile__avatar.jpg"
-          alt="Аватар пользователя"
-          class="profile__avatar"
-        />
+        <img src="./images/profile__avatar.jpg" alt="Аватар пользователя" class="profile__avatar" />
         <div class="profile__info">
           <div class="profile__user-name-wraper">
             <h1 class="profile__user-name">Жак-Ив Кусто</h1>
@@ -90,21 +61,27 @@
                 type="text"
                 class="popup__field"
                 name="userName"
-                required
                 placeholder="Имя пользователя"
+                required
+                minlength="2"
+                maxlength="40"
               />
+              <p class="popup__error userName-error"></p>
             </li>
             <li class="popup__field-list-element">
               <input
                 type="text"
                 class="popup__field"
                 name="userOccupation"
-                required
                 placeholder="Род деятельности"
+                required
+                minlength="2"
+                maxlength="200"
               />
+              <p class="popup__error userOccupation-error"></p>
             </li>
           </ul>
-          <button type="submit" class="button button_type_submit">
+          <button type="submit" name="submitButton" class="button button_type_submit">
             Сохранить
           </button>
         </form>
@@ -126,21 +103,25 @@
                 type="text"
                 class="popup__field"
                 name="placeName"
-                required
                 placeholder="Название"
+                required
+                minlength="2"
+                maxlength="30"
               />
+              <p class="popup__error placeName-error"></p>
             </li>
             <li class="popup__field-list-element">
               <input
-                type="text"
+                type="url"
                 class="popup__field"
                 name="placeImage"
-                required
                 placeholder="Ссылка на картинку"
+                required
               />
+              <p class="popup__error placeImage-error"></p>
             </li>
           </ul>
-          <button type="submit" class="button button_type_submit">
+          <button type="submit" name="submitButton" class="button button_type_submit">
             Создать
           </button>
         </form>
@@ -178,6 +159,7 @@
         <button type="button" class="button button_type_delite"></button>
       </li>
     </template>
+    <script src="./scripts/validate.js"></script>
     <script src="./scripts/defaultsCards.js"></script>
     <script src="./scripts/index.js"></script>
   </body>
