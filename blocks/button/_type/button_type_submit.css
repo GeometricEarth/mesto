@@ -10,7 +10,7 @@
   text-align: center;
   margin-top: 18px;
 }
-.button_type_submit:hover {
+.button_type_submit:not(.button_disabled):hover {
   opacity: 0.8;
 }
 
