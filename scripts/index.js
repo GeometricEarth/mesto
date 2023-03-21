@@ -4,9 +4,9 @@ const userOccupation = profile.querySelector('.profile__occupation');
 const buttonEditingProfile = profile.querySelector('.button_type_edit');
 
 const popupList = document.querySelectorAll('.popup');
+const buttonsClosePopupList = document.querySelectorAll('.button_type_close');
 
 const profilePopup = document.querySelector('.popup_type_edit-profile');
-const buttonCloseProfileModal = profilePopup.querySelector('.button_type_close');
 const profileModalForm = document.forms.profileModalForm;
 const userOccupationModalFild = profileModalForm.userOccupation;
 const userNameModalFild = profileModalForm.userName;
@@ -15,13 +15,11 @@ const templateCard = document.querySelector('#templateCard').content;
 const galleryContainer = document.querySelector('.gallery__card-list');
 
 const enlargedImagePopup = document.querySelector('.popup_type_image-scaling');
-const buttonCloseEnlargedImagePopup = enlargedImagePopup.querySelector('.button_type_close');
 const enlargedImage = enlargedImagePopup.querySelector('.popup__enlarged-image');
 
 const newPlacePopup = document.querySelector('.popup_type_add-place');
 const newPlaceForm = document.forms.newPlaceForm;
 const newPlaseFieldList = newPlaceForm.querySelectorAll('.popup__field');
-const buttonCloseNewPlacePopup = newPlacePopup.querySelector('.button_type_close');
 const buttonShowNewPlacePopup = profile.querySelector('.button_type_add');
 
 function handleShowEditProfileModal(event) {
@@ -123,11 +121,12 @@ popupList.forEach((element) => {
   });
 });
 
-buttonCloseProfileModal.addEventListener('click', () => {
-  closePopup(profilePopup);
+buttonsClosePopupList.forEach((button) => {
+  const targetPopup = button.closest('.popup');
+  button.addEventListener('click', () => {
+    closePopup(targetPopup);
+  });
 });
-buttonCloseNewPlacePopup.addEventListener('click', () => closePopup(newPlacePopup));
-buttonCloseEnlargedImagePopup.addEventListener('click', () => closePopup(enlargedImagePopup));
 
 buttonEditingProfile.addEventListener('click', handleShowEditProfileModal);
 profileModalForm.addEventListener('submit', handleSaveNewProfileData);
