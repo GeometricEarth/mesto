@@ -99,16 +99,13 @@ function closePopup(element) {
   element.classList.remove('popup_opened');
   document.removeEventListener('keydown', handleEscapeKeyListener);
 }
-function hasTargetClassName(element, targetClassName) {
-  const classList = Array.from(element.classList);
-  return classList.some((className) => {
-    return className === targetClassName;
-  });
-}
+
 function handleEscapeKeyListener(evt) {
   if (evt.key === 'Escape') {
     popupList.forEach((element) => {
-      closePopup(element);
+      if (element.classList.contains('popup_opened')) {
+        closePopup(element);
+      }
     });
   }
 }
@@ -117,7 +114,8 @@ renderDefaultCards(initialCards);
 
 popupList.forEach((element) => {
   element.addEventListener('click', (event) => {
-    if (hasTargetClassName(event.target, 'popup')) closePopup(element);
+    const targegClassList = event.target.classList;
+    if (targegClassList.contains('popup')) closePopup(element);
   });
 });
 
