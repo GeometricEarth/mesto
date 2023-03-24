@@ -80,6 +80,8 @@ function handleAddPlace(event) {
   renderCard(newPlace);
 
   closePopup(newPlacePopup);
+  newPlaceForm.reset();
+  // resetValidation(newPlaceForm.name, false);
 }
 
 function handleRemoveCard(event) {
@@ -102,11 +104,8 @@ function closePopup(element) {
 
 function handleEscapeKeyListener(evt) {
   if (evt.key === 'Escape') {
-    popupList.forEach((element) => {
-      if (element.classList.contains('popup_opened')) {
-        closePopup(element);
-      }
-    });
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   }
 }
 
