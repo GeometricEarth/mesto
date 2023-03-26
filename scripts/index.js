@@ -1,3 +1,5 @@
+import Card from './card.js';
+
 const profile = document.querySelector('.profile');
 const userName = profile.querySelector('.profile__user-name');
 const userOccupation = profile.querySelector('.profile__occupation');
@@ -11,7 +13,6 @@ const profileModalForm = document.forms.profileModalForm;
 const userOccupationModalFild = profileModalForm.userOccupation;
 const userNameModalFild = profileModalForm.userName;
 
-const templateCard = document.querySelector('#templateCard').content;
 const galleryContainer = document.querySelector('.gallery__card-list');
 
 const enlargedImagePopup = document.querySelector('.popup_type_image-scaling');
@@ -38,36 +39,18 @@ function handleSaveNewProfileData(event) {
 }
 
 function renderDefaultCards(elementsArray) {
-  initialCards.forEach((item) => renderCard(item));
+  initialCards.forEach((data) => renderCard(data));
 }
 
-function renderCard(item) {
-  const card = createCard(item);
-  galleryContainer.prepend(card);
+function renderCard(data) {
+  const card = new Card(data, '#templateCard', showEnlargedImagePopup);
+  galleryContainer.prepend(card.createCard());
 }
 
-function createCard(item) {
-  const cardElement = templateCard.cloneNode(true);
-  const cardImage = cardElement.querySelector('.card__image');
-  cardImage.setAttribute('alt', item.placeName);
-  cardImage.setAttribute('src', item.placeImage);
-
-  cardElement.querySelector('.card__title').innerText = item.placeName;
-
-  cardElement.querySelector('.button_type_delite').addEventListener('click', handleRemoveCard);
-
-  cardElement.querySelector('.card__like-button').addEventListener('click', handleLikeCard);
-
-  cardElement
-    .querySelector('.card__image')
-    .addEventListener('click', () => showEnlargedImagePopup(item));
-  return cardElement;
-}
-
-function showEnlargedImagePopup(item) {
-  enlargedImage.setAttribute('src', item.placeImage);
-  enlargedImage.setAttribute('alt', item.placeName);
-  enlargedImagePopup.querySelector('.popup__place-title').innerText = item.placeName;
+function showEnlargedImagePopup(placeName, placeImage) {
+  enlargedImage.setAttribute('src', placeImage);
+  enlargedImage.setAttribute('alt', placeName);
+  enlargedImagePopup.querySelector('.popup__place-title').innerText = placeName;
   openPopup(enlargedImagePopup);
 }
 
@@ -81,15 +64,6 @@ function handleAddPlace(event) {
 
   closePopup(newPlacePopup);
   newPlaceForm.reset();
-  // resetValidation(newPlaceForm.name, false);
-}
-
-function handleRemoveCard(event) {
-  event.target.closest('.card').remove();
-}
-
-function handleLikeCard(event) {
-  event.target.classList.toggle('card__like-button_active');
 }
 
 function openPopup(element) {
@@ -132,4 +106,5 @@ buttonShowNewPlacePopup.addEventListener('click', () => {
   checkSubmitButtonState(newPlaceForm.name, validationConfig.inactiveButtonClass);
   openPopup(newPlacePopup);
 });
+
 newPlaceForm.addEventListener('submit', handleAddPlace);
