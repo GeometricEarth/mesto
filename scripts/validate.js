@@ -99,4 +99,4 @@ function hasInvalidFild(fieldList) {
     return fieldElement.validity.valid ? false : true;
   });
 }
-enableValidation(validationConfig);
+// enableValidation(validationConfig);
