@@ -1,4 +1,7 @@
 import Card from './card.js';
+import FormValidator from './FormValidator.js';
+import { initialCards } from './defaultsCards.js';
+import { validationConfig } from './validationConfig.js';
 
 const profile = document.querySelector('.profile');
 const userName = profile.querySelector('.profile__user-name');
@@ -9,9 +12,9 @@ const popupList = document.querySelectorAll('.popup');
 const buttonsClosePopupList = document.querySelectorAll('.button_type_close');
 
 const profilePopup = document.querySelector('.popup_type_edit-profile');
-const profileModalForm = document.forms.profileModalForm;
-const userOccupationModalFild = profileModalForm.userOccupation;
-const userNameModalFild = profileModalForm.userName;
+const profilePopuplForm = document.forms.profileModalForm;
+const userOccupationModalFild = profilePopuplForm.userOccupation;
+const userNameModalFild = profilePopuplForm.userName;
 
 const galleryContainer = document.querySelector('.gallery__card-list');
 
@@ -23,11 +26,16 @@ const newPlaceForm = document.forms.newPlaceForm;
 const newPlaseFieldList = newPlaceForm.querySelectorAll('.popup__field');
 const buttonShowNewPlacePopup = profile.querySelector('.button_type_add');
 
+const profilePopuplFormValidate = new FormValidator(validationConfig, profilePopuplForm);
+const newPlaceFormValidate = new FormValidator(validationConfig, newPlaceForm);
+profilePopuplFormValidate.enableValidation();
+newPlaceFormValidate.enableValidation();
+
 function handleShowEditProfileModal(event) {
   event.preventDefault();
   userOccupationModalFild.value = userOccupation.textContent;
   userNameModalFild.value = userName.textContent;
-  resetValidation(profileModalForm.name, true);
+  profilePopuplFormValidate.resetValidation(true);
   openPopup(profilePopup);
 }
 
@@ -85,6 +93,7 @@ function handleEscapeKeyListener(evt) {
 
 renderDefaultCards(initialCards);
 
+//Поиск всех попапов и назначения обработчиков клика за пределы формы
 popupList.forEach((element) => {
   element.addEventListener('click', (event) => {
     const targegClassList = event.target.classList;
@@ -92,6 +101,7 @@ popupList.forEach((element) => {
   });
 });
 
+//Назначение обработчика клика по всем кнопкам закрытия попапов
 buttonsClosePopupList.forEach((button) => {
   const targetPopup = button.closest('.popup');
   button.addEventListener('click', () => {
@@ -100,10 +110,10 @@ buttonsClosePopupList.forEach((button) => {
 });
 
 buttonEditingProfile.addEventListener('click', handleShowEditProfileModal);
-profileModalForm.addEventListener('submit', handleSaveNewProfileData);
+profilePopuplForm.addEventListener('submit', handleSaveNewProfileData);
 
 buttonShowNewPlacePopup.addEventListener('click', () => {
-  checkSubmitButtonState(newPlaceForm.name, validationConfig.inactiveButtonClass);
+  newPlaceFormValidate.checkSubmitButtonState();
   openPopup(newPlacePopup);
 });
 
