@@ -46,15 +46,6 @@ function handleSaveNewProfileData(event) {
   closePopup(profilePopup);
 }
 
-function renderDefaultCards(elementsArray) {
-  initialCards.forEach((data) => renderCard(data));
-}
-
-function renderCard(data) {
-  const card = new Card(data, '#templateCard', showEnlargedImagePopup);
-  galleryContainer.prepend(card.createCard());
-}
-
 function showEnlargedImagePopup(placeName, placeImage) {
   enlargedImage.setAttribute('src', placeImage);
   enlargedImage.setAttribute('alt', placeName);
@@ -91,9 +82,18 @@ function handleEscapeKeyListener(evt) {
   }
 }
 
+function renderDefaultCards(elementsArray) {
+  initialCards.forEach((data) => renderCard(data));
+}
+
+function renderCard(data) {
+  const card = new Card(data, '#templateCard', showEnlargedImagePopup);
+  galleryContainer.prepend(card.createCard());
+}
+
 renderDefaultCards(initialCards);
 
-//Поиск всех попапов и назначения обработчиков клика за пределы формы
+//назначения обработчиков клика за пределы формы
 popupList.forEach((element) => {
   element.addEventListener('click', (event) => {
     const targegClassList = event.target.classList;
@@ -101,7 +101,7 @@ popupList.forEach((element) => {
   });
 });
 
-//Назначение обработчика клика по всем кнопкам закрытия попапов
+//Назначение обработчиков клика по кнопкам закрытия попапов
 buttonsClosePopupList.forEach((button) => {
   const targetPopup = button.closest('.popup');
   button.addEventListener('click', () => {
