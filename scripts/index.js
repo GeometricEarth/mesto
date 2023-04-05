@@ -1,3 +1,8 @@
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+import { initialCards } from './defaultsCards.js';
+import { validationConfig } from './validationConfig.js';
+
 const profile = document.querySelector('.profile');
 const userName = profile.querySelector('.profile__user-name');
 const userOccupation = profile.querySelector('.profile__occupation');
@@ -7,11 +12,10 @@ const popupList = document.querySelectorAll('.popup');
 const buttonsClosePopupList = document.querySelectorAll('.button_type_close');
 
 const profilePopup = document.querySelector('.popup_type_edit-profile');
-const profileModalForm = document.forms.profileModalForm;
-const userOccupationModalFild = profileModalForm.userOccupation;
-const userNameModalFild = profileModalForm.userName;
+const profilePopuplForm = document.forms.profileModalForm;
+const userOccupationModalFild = profilePopuplForm.userOccupation;
+const userNameModalFild = profilePopuplForm.userName;
 
-const templateCard = document.querySelector('#templateCard').content;
 const galleryContainer = document.querySelector('.gallery__card-list');
 
 const enlargedImagePopup = document.querySelector('.popup_type_image-scaling');
@@ -22,11 +26,16 @@ const newPlaceForm = document.forms.newPlaceForm;
 const newPlaseFieldList = newPlaceForm.querySelectorAll('.popup__field');
 const buttonShowNewPlacePopup = profile.querySelector('.button_type_add');
 
+const profilePopuplFormValidate = new FormValidator(validationConfig, profilePopuplForm);
+const newPlaceFormValidate = new FormValidator(validationConfig, newPlaceForm);
+profilePopuplFormValidate.enableValidation();
+newPlaceFormValidate.enableValidation();
+
 function handleShowEditProfileModal(event) {
   event.preventDefault();
   userOccupationModalFild.value = userOccupation.textContent;
   userNameModalFild.value = userName.textContent;
-  resetValidation(profileModalForm.name, true);
+  profilePopuplFormValidate.resetValidation(true);
   openPopup(profilePopup);
 }
 
@@ -37,37 +46,10 @@ function handleSaveNewProfileData(event) {
   closePopup(profilePopup);
 }
 
-function renderDefaultCards(elementsArray) {
-  initialCards.forEach((item) => renderCard(item));
-}
-
-function renderCard(item) {
-  const card = createCard(item);
-  galleryContainer.prepend(card);
-}
-
-function createCard(item) {
-  const cardElement = templateCard.cloneNode(true);
-  const cardImage = cardElement.querySelector('.card__image');
-  cardImage.setAttribute('alt', item.placeName);
-  cardImage.setAttribute('src', item.placeImage);
-
-  cardElement.querySelector('.card__title').innerText = item.placeName;
-
-  cardElement.querySelector('.button_type_delite').addEventListener('click', handleRemoveCard);
-
-  cardElement.querySelector('.card__like-button').addEventListener('click', handleLikeCard);
-
-  cardElement
-    .querySelector('.card__image')
-    .addEventListener('click', () => showEnlargedImagePopup(item));
-  return cardElement;
-}
-
-function showEnlargedImagePopup(item) {
-  enlargedImage.setAttribute('src', item.placeImage);
-  enlargedImage.setAttribute('alt', item.placeName);
-  enlargedImagePopup.querySelector('.popup__place-title').innerText = item.placeName;
+function showEnlargedImagePopup(placeName, placeImage) {
+  enlargedImage.setAttribute('src', placeImage);
+  enlargedImage.setAttribute('alt', placeName);
+  enlargedImagePopup.querySelector('.popup__place-title').innerText = placeName;
   openPopup(enlargedImagePopup);
 }
 
@@ -81,15 +63,6 @@ function handleAddPlace(event) {
 
   closePopup(newPlacePopup);
   newPlaceForm.reset();
-  // resetValidation(newPlaceForm.name, false);
-}
-
-function handleRemoveCard(event) {
-  event.target.closest('.card').remove();
-}
-
-function handleLikeCard(event) {
-  event.target.classList.toggle('card__like-button_active');
 }
 
 function openPopup(element) {
@@ -109,8 +82,18 @@ function handleEscapeKeyListener(evt) {
   }
 }
 
+function renderDefaultCards(elementsArray) {
+  initialCards.forEach((data) => renderCard(data));
+}
+
+function renderCard(data) {
+  const card = new Card(data, '#templateCard', showEnlargedImagePopup);
+  galleryContainer.prepend(card.createCard());
+}
+
 renderDefaultCards(initialCards);
 
+//назначения обработчиков клика за пределы формы
 popupList.forEach((element) => {
   element.addEventListener('click', (event) => {
     const targegClassList = event.target.classList;
@@ -118,6 +101,7 @@ popupList.forEach((element) => {
   });
 });
 
+//Назначение обработчиков клика по кнопкам закрытия попапов
 buttonsClosePopupList.forEach((button) => {
   const targetPopup = button.closest('.popup');
   button.addEventListener('click', () => {
@@ -126,10 +110,11 @@ buttonsClosePopupList.forEach((button) => {
 });
 
 buttonEditingProfile.addEventListener('click', handleShowEditProfileModal);
-profileModalForm.addEventListener('submit', handleSaveNewProfileData);
+profilePopuplForm.addEventListener('submit', handleSaveNewProfileData);
 
 buttonShowNewPlacePopup.addEventListener('click', () => {
-  checkSubmitButtonState(newPlaceForm.name, validationConfig.inactiveButtonClass);
+  newPlaceFormValidate.checkSubmitButtonState();
   openPopup(newPlacePopup);
 });
+
 newPlaceForm.addEventListener('submit', handleAddPlace);
