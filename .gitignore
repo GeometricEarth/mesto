@@ -1,2 +1,3 @@
 .prettierrc
-pixperfectImages
+node_modules
+.npmrc

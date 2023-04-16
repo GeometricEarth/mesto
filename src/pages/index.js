@@ -1,7 +1,8 @@
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-import { initialCards } from './defaultsCards.js';
-import { validationConfig } from './validationConfig.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import { initialCards } from '../utils/defaultsCards.js';
+import { validationConfig } from '../utils/validationConfig.js';
+import './index.css';
 
 const profile = document.querySelector('.profile');
 const userName = profile.querySelector('.profile__user-name');
