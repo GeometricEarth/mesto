@@ -4,6 +4,7 @@ import FormValidator from '../components/FormValidator.js';
 import { initialCards } from '../utils/defaultsCards.js';
 import { validationConfig } from '../utils/validationConfig.js';
 import './index.css';
+import PopupWithImage from '../components/PopupWithImage.js';
 
 const profile = document.querySelector('.profile');
 const userName = profile.querySelector('.profile__user-name');
@@ -20,9 +21,6 @@ const userNameModalFild = profilePopuplForm.userName;
 
 const galleryContainer = document.querySelector('.gallery__card-list');
 
-const enlargedImagePopup = document.querySelector('.popup_type_image-scaling');
-const enlargedImage = enlargedImagePopup.querySelector('.popup__enlarged-image');
-
 const newPlacePopup = document.querySelector('.popup_type_add-place');
 const newPlaceForm = document.forms.newPlaceForm;
 const newPlaseFieldList = newPlaceForm.querySelectorAll('.popup__field');
@@ -32,6 +30,9 @@ const profilePopuplFormValidate = new FormValidator(validationConfig, profilePop
 const newPlaceFormValidate = new FormValidator(validationConfig, newPlaceForm);
 profilePopuplFormValidate.enableValidation();
 newPlaceFormValidate.enableValidation();
+
+const popupWithImage = new PopupWithImage('.popup_type_image-scaling');
+popupWithImage.setEventListeners();
 
 function handleShowEditProfileModal(event) {
   event.preventDefault();
@@ -48,11 +49,8 @@ function handleSaveNewProfileData(event) {
   closePopup(profilePopup);
 }
 
-function showEnlargedImagePopup(placeName, placeImage) {
-  enlargedImage.setAttribute('src', placeImage);
-  enlargedImage.setAttribute('alt', placeName);
-  enlargedImagePopup.querySelector('.popup__place-title').innerText = placeName;
-  openPopup(enlargedImagePopup);
+function handleCardClick(placeName, placeImage) {
+  popupWithImage.open(placeName, placeImage);
 }
 
 function handleAddPlace(event) {
@@ -72,10 +70,10 @@ function openPopup(element) {
   document.addEventListener('keydown', handleEscapeKeyListener);
 }
 
-function closePopup(element) {
-  element.classList.remove('popup_opened');
-  document.removeEventListener('keydown', handleEscapeKeyListener);
-}
+// function closePopup(element) {
+//   element.classList.remove('popup_opened');
+//   document.removeEventListener('keydown', handleEscapeKeyListener);
+// }
 
 function handleEscapeKeyListener(evt) {
   if (evt.key === 'Escape') {
@@ -89,27 +87,27 @@ function renderDefaultCards(elementsArray) {
 }
 
 function renderCard(data) {
-  const card = new Card(data, '#templateCard', showEnlargedImagePopup);
+  const card = new Card(data, '#templateCard', handleCardClick);
   galleryContainer.prepend(card.createCard());
 }
 
 renderDefaultCards(initialCards);
 
 //назначения обработчиков клика за пределы формы
-popupList.forEach((element) => {
-  element.addEventListener('click', (event) => {
-    const targegClassList = event.target.classList;
-    if (targegClassList.contains('popup')) closePopup(element);
-  });
-});
+// popupList.forEach((element) => {
+//   element.addEventListener('click', (event) => {
+//     const targegClassList = event.target.classList;
+//     if (targegClassList.contains('popup')) closePopup(element);
+//   });
+// });
 
 //Назначение обработчиков клика по кнопкам закрытия попапов
-buttonsClosePopupList.forEach((button) => {
-  const targetPopup = button.closest('.popup');
-  button.addEventListener('click', () => {
-    closePopup(targetPopup);
-  });
-});
+// buttonsClosePopupList.forEach((button) => {
+//   const targetPopup = button.closest('.popup');
+//   button.addEventListener('click', () => {
+//     closePopup(targetPopup);
+//   });
+// });
 
 buttonEditingProfile.addEventListener('click', handleShowEditProfileModal);
 profilePopuplForm.addEventListener('submit', handleSaveNewProfileData);
