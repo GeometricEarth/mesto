@@ -14,7 +14,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 // const userOccupation = profile.querySelector('.profile__occupation');
 const buttonEditingProfile = document.querySelector('.button_type_edit');
 
-const galleryContainer = document.querySelector('.gallery__card-list');
+const gallerySelector = '.gallery__card-list';
 
 const profilePopuplForm = document.forms.profileModalForm;
 // const userOccupationModalFild = profilePopuplForm.userOccupation;
@@ -34,6 +34,7 @@ const profilePopup = new PopupWithForm('.popup_type_edit-profile', (data) => {
   userInfo.setUserInfo(data);
   profilePopup.close();
 });
+
 const newPlacePopup = new PopupWithForm('.popup_type_add-place', (data) => {
   renderCard(data);
   newPlacePopup.close();
@@ -62,20 +63,26 @@ profilePopup.setEventListeners();
 //   // closePopup(profilePopup);
 // }
 
+const cardList = new Section(
+  {
+    items: initialCards,
+    renderer: (data) => {
+      renderCard(data);
+    },
+  },
+  gallerySelector
+);
+
+cardList.renderItems();
+
 function handleCardClick(placeName, placeImage) {
   popupWithImage.open(placeName, placeImage);
 }
 
-function renderDefaultCards(elementsArray) {
-  initialCards.forEach((data) => renderCard(data));
-}
-
 function renderCard(data) {
   const card = new Card(data, '#templateCard', handleCardClick);
-  galleryContainer.prepend(card.createCard());
+  cardList.addItem(card.createCard());
 }
-
-renderDefaultCards(initialCards);
 
 buttonEditingProfile.addEventListener('click', () => {
   profilePopup.setInputValues(userInfo.getUserInfo());

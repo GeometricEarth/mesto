@@ -10,7 +10,7 @@ export default class Card {
     return document.querySelector(this._templateSelecotr).content.cloneNode(true);
   }
 
-  createCard(item) {
+  createCard() {
     this._element = this._getTemplate();
     const cardImageElement = this._element.querySelector('.card__image');
     cardImageElement.alt = this._placeName;
