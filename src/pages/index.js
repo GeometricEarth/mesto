@@ -30,7 +30,10 @@ const newPlaceFormValidate = new FormValidator(validationConfig, newPlaceForm);
 profilePopuplFormValidate.enableValidation();
 newPlaceFormValidate.enableValidation();
 
-const profilePopup = new PopupWithForm('.popup_type_edit-profile', (data) => {});
+const profilePopup = new PopupWithForm('.popup_type_edit-profile', (data) => {
+  userInfo.setUserInfo(data);
+  profilePopup.close();
+});
 const newPlacePopup = new PopupWithForm('.popup_type_add-place', (data) => {
   renderCard(data);
   newPlacePopup.close();
