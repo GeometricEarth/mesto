@@ -34,9 +34,15 @@ const newPlacePopup = new PopupWithForm('.popup_type_add-place', (data) => {
 const popupWithImage = new PopupWithImage('.popup_type_image-scaling');
 popupWithImage.setEventListeners();
 newPlacePopup.setEventListeners();
+profilePopup.setEventListeners();
 
-function handleShowEditProfileModal(event) {
-  event.preventDefault();
+const profileData = {
+  userName: userName.textContent,
+  userOccupation: userOccupation.textContent,
+};
+profilePopup.setInputValues(profileData);
+
+function handleShowEditProfileModal() {
   userOccupationModalFild.value = userOccupation.textContent;
   userNameModalFild.value = userName.textContent;
   profilePopuplFormValidate.resetValidation(true);
@@ -64,7 +70,9 @@ function renderCard(data) {
 
 renderDefaultCards(initialCards);
 
-buttonEditingProfile.addEventListener('click', handleShowEditProfileModal);
+buttonEditingProfile.addEventListener('click', () => {
+  profilePopup.open();
+});
 
 buttonShowNewPlacePopup.addEventListener('click', () => {
   newPlaceFormValidate.checkSubmitButtonState();
