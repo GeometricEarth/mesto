@@ -5,6 +5,7 @@ export default class Popup {
     this._handleEscClose = this._handleEscClose.bind(this);
     this.close = this.close.bind(this);
   }
+
   open() {
     this._element.classList.add('popup_opened');
   }
