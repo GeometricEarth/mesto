@@ -1,8 +1,8 @@
 export default class Card {
-  constructor(data, templateSelector, showEnlargedImagePopup) {
+  constructor(data, templateSelector, handleCardClick) {
     this._placeName = data.placeName;
     this._placeImage = data.placeImage;
-    this._showPopup = showEnlargedImagePopup;
+    this._showPopup = handleCardClick;
     this._templateSelecotr = templateSelector;
   }
 
@@ -10,7 +10,7 @@ export default class Card {
     return document.querySelector(this._templateSelecotr).content.cloneNode(true);
   }
 
-  createCard(item) {
+  createCard() {
     this._element = this._getTemplate();
     const cardImageElement = this._element.querySelector('.card__image');
     cardImageElement.alt = this._placeName;
