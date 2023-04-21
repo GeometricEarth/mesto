@@ -5,7 +5,6 @@ export default class PopupWithImage extends Popup {
     super(popupSelector);
     this._enlargedImageElement = this._element.querySelector('.popup__enlarged-image');
     this._placeNameElement = this._element.querySelector('.popup__place-title');
-    console.log(this._element);
   }
 
   open(placeName, placeImage) {
