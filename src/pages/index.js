@@ -13,12 +13,15 @@ import {
   buttonOpenNewPlacePopupSelector,
 } from '../utils/constants.js';
 
+import { getUserInfo } from '../components/API.js';
+
 import UserInfo from '../components/UserInfo';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import { data } from 'browserslist';
 
 const buttonEditingProfile = document.querySelector(buttonOpenProfilePopupSelector);
 const buttonShowNewPlacePopup = document.querySelector(buttonOpenNewPlacePopupSelector);
@@ -70,6 +73,8 @@ function renderCard(data) {
 
 buttonEditingProfile.addEventListener('click', () => {
   profilePopup.setInputValues(userInfo.getUserInfo());
+  getUserInfo();
+
   profilePopup.open();
 });
 
@@ -77,3 +82,4 @@ buttonShowNewPlacePopup.addEventListener('click', () => {
   newPlaceFormValidate.checkSubmitButtonState();
   newPlacePopup.open();
 });
+getUserInfo(userInfo.setUserInfo);
