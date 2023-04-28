@@ -1,9 +1,19 @@
 export default class Card {
-  constructor(data, templateSelector, handleCardClick) {
-    this._placeName = data.placeName;
-    this._placeImage = data.placeImage;
+  constructor(
+    { name, link, _id, owner, likes, isOwner },
+    templateSelector,
+    handleCardClick,
+    handleRemoveCard
+  ) {
+    this._placeName = name;
+    this._placeImage = link;
+    this._id = _id;
+    this._owner = owner;
+    this._likes = likes;
     this._showPopup = handleCardClick;
+    this._handleRemoveCard = handleRemoveCard;
     this._templateSelecotr = templateSelector;
+    this._isOwner = isOwner;
   }
 
   _getTemplate() {
@@ -12,9 +22,14 @@ export default class Card {
 
   createCard() {
     this._element = this._getTemplate();
+    this._buttonDelete = this._element.querySelector('.button_type_delite');
+
     const cardImageElement = this._element.querySelector('.card__image');
     cardImageElement.alt = this._placeName;
     cardImageElement.src = this._placeImage;
+    if (!this._isOwner) {
+      this._buttonDelete.classList.add('button_hidden');
+    }
 
     this._element.querySelector('.card__title').innerText = this._placeName;
 
@@ -24,18 +39,16 @@ export default class Card {
   }
 
   _setEventListeners(cardImageElement) {
-    const buttonDelite = this._element.querySelector('.button_type_delite');
     const buttonLike = this._element.querySelector('.card__like-button');
-
-    buttonDelite.addEventListener('click', this._handleRemoveCard);
+    if (this._isOwner) {
+      this._buttonDelete.addEventListener('click', (evt) => {
+        this._handleRemoveCard(this._id, evt);
+      });
+    }
     buttonLike.addEventListener('click', this._handleLikeCard);
     cardImageElement.addEventListener('click', () => {
       this._showPopup(this._placeName, this._placeImage);
     });
-  }
-
-  _handleRemoveCard(event) {
-    event.target.closest('.card').remove();
   }
 
   _handleLikeCard(event) {

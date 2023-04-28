@@ -1,9 +1,7 @@
 import './index.css';
-import { initialCards } from '../utils/defaultsCards.js';
 import {
   validationConfig,
-  userNameSelector,
-  userOccupationSelector,
+  profileSelectors,
   gallerySelector,
   profilePopupSelector,
   newPlacePopupSelector,
@@ -13,6 +11,7 @@ import {
   buttonOpenNewPlacePopupSelector,
 } from '../utils/constants.js';
 
+import API from '../components/API.js';
 import UserInfo from '../components/UserInfo';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
@@ -26,50 +25,105 @@ const buttonShowNewPlacePopup = document.querySelector(buttonOpenNewPlacePopupSe
 const profilePopuplForm = document.forms.profileModalForm;
 const newPlaceForm = document.forms.newPlaceForm;
 
-const userInfo = new UserInfo(userNameSelector, userOccupationSelector);
+const api = new API(
+  'https://mesto.nomoreparties.co/v1/cohort-65/',
+  '3ad7048e-a39e-4977-8a2a-b13e574881a8'
+);
 
-const profilePopuplFormValidate = new FormValidator(validationConfig, profilePopuplForm);
+const userInfo = new UserInfo(profileSelectors);
+getUserInfo();
+
+async function getUserInfo() {
+  try {
+    const userData = await api.getUserInfo();
+    userInfo.updateUserInfo(userData);
+  } catch (error) {
+    errorHandler('Ошибка обнавления профиля пользователя. Сервер ответил:', error);
+  }
+}
+
+const profilePopupFormValidate = new FormValidator(validationConfig, profilePopuplForm);
 const newPlaceFormValidate = new FormValidator(validationConfig, newPlaceForm);
-profilePopuplFormValidate.enableValidation();
+profilePopupFormValidate.enableValidation();
 newPlaceFormValidate.enableValidation();
 
-const profilePopup = new PopupWithForm(profilePopupSelector, (data) => {
-  userInfo.setUserInfo(data);
-  profilePopup.close();
-});
+const profilePopup = new PopupWithForm(
+  profilePopupSelector,
+  async (data) => {
+    try {
+      const userData = await api.patchUserInfo(data);
+      userInfo.setUserInfo(userData);
+    } catch (error) {
+      errorHandler('Ошибка обнавления профиля пользователя. Сервер ответил:', error);
+    }
+    profilePopupFormValidate.resetValidation(true);
+    profilePopup.close();
+  },
+  () => profilePopupFormValidate.resetValidation(true)
+);
 
-const newPlacePopup = new PopupWithForm(newPlacePopupSelector, (data) => {
-  renderCard(data);
-  newPlacePopup.close();
-});
+const newPlacePopup = new PopupWithForm(
+  newPlacePopupSelector,
+  (data) => {
+    api
+      .addCard(data.placeName, data.placeImage)
+      .then((resData) => {
+        renderCard(resData);
+      })
+      .catch((error) => {
+        console.error(`Ошибка: ${error}`);
+      })
+      .finally(() => {
+        newPlacePopup.close();
+      });
+  },
+  () => newPlaceFormValidate.resetValidation(false)
+);
 const popupWithImage = new PopupWithImage(popupWithImageSelector);
 popupWithImage.setEventListeners();
 newPlacePopup.setEventListeners();
 profilePopup.setEventListeners();
 
-const cardList = new Section(
-  {
-    items: initialCards,
-    renderer: (data) => {
-      renderCard(data);
-    },
-  },
-  gallerySelector
-);
+const cardList = new Section(gallerySelector, (data) => {
+  renderCard(data);
+});
 
-cardList.renderItems();
+(async function getCards() {
+  try {
+    const cards = await api.getCards();
+    cardList.renderItems(cards);
+  } catch (error) {
+    errorHandler('Ошибка загрузки списка карточек. Сервер ответил:', error);
+  }
+})();
 
 function handleCardClick(placeName, placeImage) {
   popupWithImage.open(placeName, placeImage);
 }
 
+function handleRemoveCard(id, event) {
+  api
+    .deleteCard(id)
+    .then(() => {
+      event.target.closest('.card').remove();
+    })
+    .catch((error) => {
+      errorHandler('Ошибка удаления карточки. Ответ сервера:', error);
+    });
+}
+
 function renderCard(data) {
-  const card = new Card(data, cardTemplateSelector, handleCardClick);
+  const userData = userInfo.getUserInfo();
+  userData.userId === data.owner._id ? (data.isOwner = true) : (data.isOwner = false);
+
+  const card = new Card(data, cardTemplateSelector, handleCardClick, handleRemoveCard);
   cardList.addItem(card.createCard());
 }
 
 buttonEditingProfile.addEventListener('click', () => {
-  profilePopup.setInputValues(userInfo.getUserInfo());
+  const { name, about } = userInfo.getUserInfo();
+  profilePopup.setInputValues({ name, about });
+
   profilePopup.open();
 });
 
@@ -77,3 +131,7 @@ buttonShowNewPlacePopup.addEventListener('click', () => {
   newPlaceFormValidate.checkSubmitButtonState();
   newPlacePopup.open();
 });
+
+function errorHandler(massege, error) {
+  console.error(`${massege} ${error}`);
+}

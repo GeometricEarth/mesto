@@ -6,9 +6,12 @@ export const validationConfig = {
   inputErrorClass: 'popup__field_type_error',
   errorClass: 'popup__error_visible',
 };
+export const profileSelectors = {
+  nameSelector: '.profile__user-name',
+  occupationSelector: '.profile__occupation',
+  avatarSelector: '.profile__avatar',
+};
 
-export const userNameSelector = '.profile__user-name';
-export const userOccupationSelector = '.profile__occupation';
 export const gallerySelector = '.gallery__card-list';
 export const profilePopupSelector = '.popup_type_edit-profile';
 export const newPlacePopupSelector = '.popup_type_add-place';
