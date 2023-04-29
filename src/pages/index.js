@@ -9,6 +9,7 @@ import {
   cardTemplateSelector,
   buttonOpenProfilePopupSelector,
   buttonOpenNewPlacePopupSelector,
+  buttonConfirmSelector,
 } from '../utils/constants.js';
 
 import API from '../components/API.js';
@@ -18,6 +19,7 @@ import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithConfirm from '../components/PopupWithConfirm';
 
 const buttonEditingProfile = document.querySelector(buttonOpenProfilePopupSelector);
 const buttonShowNewPlacePopup = document.querySelector(buttonOpenNewPlacePopupSelector);
@@ -66,7 +68,7 @@ const newPlacePopup = new PopupWithForm(
   newPlacePopupSelector,
   (data) => {
     api
-      .addCard(data.placeName, data.placeImage)
+      .addCard(data)
       .then((resData) => {
         renderCard(resData);
       })
@@ -80,6 +82,9 @@ const newPlacePopup = new PopupWithForm(
   () => newPlaceFormValidate.resetValidation(false)
 );
 const popupWithImage = new PopupWithImage(popupWithImageSelector);
+
+const popupWidthconfirm = new PopupWithConfirm(buttonConfirmSelector);
+
 popupWithImage.setEventListeners();
 newPlacePopup.setEventListeners();
 profilePopup.setEventListeners();
@@ -102,14 +107,19 @@ function handleCardClick(placeName, placeImage) {
 }
 
 function handleRemoveCard(id, event) {
-  api
-    .deleteCard(id)
+  popupWidthconfirm
+    .open()
     .then(() => {
-      event.target.closest('.card').remove();
+      api
+        .deleteCard(id)
+        .then(() => {
+          event.target.closest('.card').remove();
+        })
+        .catch((error) => {
+          errorHandler('Ошибка удаления карточки. Ответ сервера:', error);
+        });
     })
-    .catch((error) => {
-      errorHandler('Ошибка удаления карточки. Ответ сервера:', error);
-    });
+    .catch(() => {});
 }
 
 function renderCard(data) {

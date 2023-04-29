@@ -19,3 +19,4 @@ export const popupWithImageSelector = '.popup_type_image-scaling';
 export const cardTemplateSelector = '#templateCard';
 export const buttonOpenProfilePopupSelector = '.button_type_edit';
 export const buttonOpenNewPlacePopupSelector = '.button_type_add';
+export const buttonConfirmSelector = '.popup_type_confirm';

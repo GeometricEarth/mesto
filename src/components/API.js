@@ -22,8 +22,8 @@ export default class API {
     });
   }
 
-  addCard(name, link) {
-    return this._sendRequest('POST', 'cards', { name, link }).then((resp) => {
+  addCard(data) {
+    return this._sendRequest('POST', 'cards', data).then((resp) => {
       return resp.json();
     });
   }
@@ -45,7 +45,7 @@ export default class API {
     }
     return fetch(`${this._baseURL}${path}`, settings).then((resp) => {
       if (!resp.ok) {
-        return Promise.reject(resp.status);
+        return Promise.reject(resp.statusText);
       }
       return resp;
     });
