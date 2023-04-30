@@ -42,22 +42,22 @@ export default class Card {
 
     this._setEventListeners(cardImageElement);
 
-    this._likesCount = this._element.querySelector(this._likeCountSelector);
+    this._likesCountElement = this._element.querySelector(this._likeCountSelector);
 
-    this._likesCount.innerText = this._likes.length;
+    this._likesCountElement.innerText = this._likes.length;
 
     return this._element;
   }
 
   setLike(likesList) {
-    this._buttonLike.classList.add('card__like-button_active');
-    this._likesCount.innerText = likesList.length;
+    this._buttonLikeElement.classList.add('card__like-button_active');
+    this._likesCountElement.innerText = likesList.length;
     this._likes = likesList;
   }
 
   deleteLike(likesList) {
-    this._buttonLike.classList.remove('card__like-button_active');
-    this._likesCount.innerText = likesList.length;
+    this._buttonLikeElement.classList.remove('card__like-button_active');
+    this._likesCountElement.innerText = likesList.length;
     this._likes = likesList;
   }
 
@@ -67,8 +67,8 @@ export default class Card {
         this._handleRemoveCard(this._id, evt);
       });
     }
-    this._buttonLike = this._element.querySelector('.card__like-button');
-    this._buttonLike.addEventListener('click', (event) => {
+    this._buttonLikeElement = this._element.querySelector('.card__like-button');
+    this._buttonLikeElement.addEventListener('click', (event) => {
       const isLikeSet = this._likes.some((element) => element._id === this._userId);
       isLikeSet ? this._handleDeleteLike(this._id) : this._handleLikeCard(this._id);
     });
