@@ -32,6 +32,18 @@ export default class API {
     return this._sendRequest('DELETE', `cards/${cardId}`, {});
   }
 
+  likeCard(id) {
+    return this._sendRequest('PUT', `cards/${id}/likes`).then((resp) => {
+      return resp.json();
+    });
+  }
+
+  deleteLikeFromCard(id) {
+    return this._sendRequest('DELETE', `cards/${id}/likes`).then((resp) => {
+      return resp.json();
+    });
+  }
+
   _sendRequest(method, path, body) {
     const settings = {
       method: method,
@@ -40,7 +52,7 @@ export default class API {
         'content-type': 'application/json',
       },
     };
-    if (Object.keys(body).length !== 0) {
+    if (!!body && Object.keys(body).length !== 0) {
       settings.body = JSON.stringify({ ...body });
     }
     return fetch(`${this._baseURL}${path}`, settings).then((resp) => {

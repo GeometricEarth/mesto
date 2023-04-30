@@ -17,6 +17,7 @@ export const profilePopupSelector = '.popup_type_edit-profile';
 export const newPlacePopupSelector = '.popup_type_add-place';
 export const popupWithImageSelector = '.popup_type_image-scaling';
 export const cardTemplateSelector = '#templateCard';
+export const likeCountSelector = '.card__like-count';
 export const buttonOpenProfilePopupSelector = '.button_type_edit';
 export const buttonOpenNewPlacePopupSelector = '.button_type_add';
 export const buttonConfirmSelector = '.popup_type_confirm';

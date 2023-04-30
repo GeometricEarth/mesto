@@ -10,6 +10,7 @@ import {
   buttonOpenProfilePopupSelector,
   buttonOpenNewPlacePopupSelector,
   buttonConfirmSelector,
+  likeCountSelector,
 } from '../utils/constants.js';
 
 import API from '../components/API.js';
@@ -106,28 +107,48 @@ function handleCardClick(placeName, placeImage) {
   popupWithImage.open(placeName, placeImage);
 }
 
-function handleRemoveCard(id, event) {
-  popupWidthconfirm
-    .open()
-    .then(() => {
-      api
-        .deleteCard(id)
-        .then(() => {
-          event.target.closest('.card').remove();
-        })
-        .catch((error) => {
-          errorHandler('Ошибка удаления карточки. Ответ сервера:', error);
-        });
-    })
-    .catch(() => {});
+async function handleRemoveCard(id, event) {
+  try {
+    await popupWidthconfirm.open();
+    await api.deleteCard(id);
+    event.target.closest('.card').remove();
+  } catch (error) {
+    console.warn(error);
+  }
 }
 
 function renderCard(data) {
   const userData = userInfo.getUserInfo();
-  userData.userId === data.owner._id ? (data.isOwner = true) : (data.isOwner = false);
+  data.userId = userData.userId;
 
-  const card = new Card(data, cardTemplateSelector, handleCardClick, handleRemoveCard);
+  const card = new Card(
+    data,
+    cardTemplateSelector,
+    handleCardClick,
+    handleRemoveCard,
+    handleLikeCard,
+    handleDeleteLikeFromCard,
+    likeCountSelector
+  );
   cardList.addItem(card.createCard());
+}
+
+async function handleLikeCard(id) {
+  try {
+    const respData = await api.likeCard(id);
+    this.setLike(respData.likes);
+  } catch (error) {
+    errorHandler('Ошибка при добавлении лайка', error);
+  }
+}
+
+async function handleDeleteLikeFromCard(id) {
+  try {
+    const respData = await api.deleteLikeFromCard(id);
+    this.deleteLike(respData.likes);
+  } catch (error) {
+    errorHandler('Ошибка при удалении лайка', error);
+  }
 }
 
 buttonEditingProfile.addEventListener('click', () => {
