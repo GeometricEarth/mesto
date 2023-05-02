@@ -2,7 +2,8 @@
   width: 24px;
   height: 24px;
   background-image: url("../../../images/edit-button.svg");
-  background-size: contain;
+  border: 1px solid white;
+  background-size: 24px 24px;
   flex-shrink: 0;
 }
 

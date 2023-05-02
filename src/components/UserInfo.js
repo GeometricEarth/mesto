@@ -25,7 +25,7 @@ export default class UserInfo {
     this._renderUserInfo();
   }
 
-  setUserAvatar(avatar) {
+  setUserAvatar({ avatar }) {
     this._userAvatar = avatar;
 
     this._renderUserInfo();

@@ -11,6 +11,8 @@ import {
   buttonOpenNewPlacePopupSelector,
   buttonConfirmSelector,
   likeCountSelector,
+  popupAvatarEdetingSelector,
+  avatarOverlaySelector,
 } from '../utils/constants.js';
 
 import API from '../components/API.js';
@@ -24,9 +26,11 @@ import PopupWithConfirm from '../components/PopupWithConfirmation';
 
 const buttonEditingProfile = document.querySelector(buttonOpenProfilePopupSelector);
 const buttonShowNewPlacePopup = document.querySelector(buttonOpenNewPlacePopupSelector);
+const avatarOverlay = document.querySelector(avatarOverlaySelector);
 
 const profilePopuplForm = document.forms.profileModalForm;
 const newPlaceForm = document.forms.newPlaceForm;
+const avatarLinkForm = document.forms.avatarEdetingForm;
 
 const api = new API(
   'https://mesto.nomoreparties.co/v1/cohort-65/',
@@ -47,8 +51,10 @@ async function getUserInfo() {
 
 const profilePopupFormValidate = new FormValidator(validationConfig, profilePopuplForm);
 const newPlaceFormValidate = new FormValidator(validationConfig, newPlaceForm);
+const avatarLinkFormValidate = new FormValidator(validationConfig, avatarEdetingForm);
 profilePopupFormValidate.enableValidation();
 newPlaceFormValidate.enableValidation();
+avatarLinkFormValidate.enableValidation();
 
 const profilePopup = new PopupWithForm(
   profilePopupSelector,
@@ -82,6 +88,23 @@ const newPlacePopup = new PopupWithForm(
   },
   () => newPlaceFormValidate.resetValidation(false)
 );
+
+const popupAvatarEdeting = new PopupWithForm(
+  popupAvatarEdetingSelector,
+  async (avatar) => {
+    try {
+      const respData = await api.updateUserAvatar(avatar);
+      userInfo.setUserAvatar(respData);
+    } catch (error) {
+      errorHandler('Ощибка обновления аватара пользователя', error);
+    } finally {
+      this.close();
+      avatarLinkFormValidate.resetValidation(false);
+    }
+  },
+  () => {}
+);
+
 const popupWithImage = new PopupWithImage(popupWithImageSelector);
 
 const popupWidthconfirm = new PopupWithConfirm(buttonConfirmSelector);
@@ -89,6 +112,7 @@ const popupWidthconfirm = new PopupWithConfirm(buttonConfirmSelector);
 popupWithImage.setEventListeners();
 newPlacePopup.setEventListeners();
 profilePopup.setEventListeners();
+popupAvatarEdeting.setEventListeners();
 
 const cardList = new Section(gallerySelector, (data) => {
   renderCard(data);
@@ -161,6 +185,10 @@ buttonEditingProfile.addEventListener('click', () => {
 buttonShowNewPlacePopup.addEventListener('click', () => {
   newPlaceFormValidate.checkSubmitButtonState();
   newPlacePopup.open();
+});
+
+avatarOverlay.addEventListener('click', () => {
+  popupAvatarEdeting.open();
 });
 
 function errorHandler(massege, error) {

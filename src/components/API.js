@@ -22,6 +22,12 @@ export default class API {
     });
   }
 
+  updateUserAvatar(link) {
+    return this._sendRequest('PATCH', 'users/me/avatar', link).then((resp) => {
+      return resp.json();
+    });
+  }
+
   addCard(data) {
     return this._sendRequest('POST', 'cards', data).then((resp) => {
       return resp.json();
