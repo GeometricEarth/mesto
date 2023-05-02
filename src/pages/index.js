@@ -87,7 +87,7 @@ const popupAvatarEdeting = new PopupWithForm(popupAvatarEdetingSelector, async (
   } catch (error) {
     errorHandler('Ощибка обновления аватара пользователя', error);
   } finally {
-    this.close();
+    popupAvatarEdeting.close();
     avatarLinkFormValidate.resetValidation(false);
   }
 });
