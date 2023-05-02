@@ -56,54 +56,41 @@ profilePopupFormValidate.enableValidation();
 newPlaceFormValidate.enableValidation();
 avatarLinkFormValidate.enableValidation();
 
-const profilePopup = new PopupWithForm(
-  profilePopupSelector,
-  async (data) => {
-    try {
-      const userData = await api.patchUserInfo(data);
-      userInfo.setUserInfo(userData);
-    } catch (error) {
-      errorHandler('Ошибка обнавления профиля пользователя. Сервер ответил:', error);
-    }
-    profilePopupFormValidate.resetValidation(true);
+const profilePopup = new PopupWithForm(profilePopupSelector, async (data) => {
+  try {
+    const userData = await api.patchUserInfo(data);
+    userInfo.setUserInfo(userData);
+  } catch (error) {
+    errorHandler('Ошибка обнавления профиля пользователя. Сервер ответил:', error);
+  } finally {
     profilePopup.close();
-  },
-  () => profilePopupFormValidate.resetValidation(true)
-);
+    profilePopupFormValidate.resetValidation(true);
+  }
+});
 
-const newPlacePopup = new PopupWithForm(
-  newPlacePopupSelector,
-  (data) => {
-    api
-      .addCard(data)
-      .then((resData) => {
-        renderCard(resData);
-      })
-      .catch((error) => {
-        console.error(`Ошибка: ${error}`);
-      })
-      .finally(() => {
-        newPlacePopup.close();
-      });
-  },
-  () => newPlaceFormValidate.resetValidation(false)
-);
+const newPlacePopup = new PopupWithForm(newPlacePopupSelector, async (data) => {
+  try {
+    const resData = await api.addCard(data);
+    renderCard(resData);
+  } catch (error) {
+    console.error(`Ошибка: ${error}`);
+  } finally {
+    newPlacePopup.close();
+    newPlaceFormValidate.resetValidation(false);
+  }
+});
 
-const popupAvatarEdeting = new PopupWithForm(
-  popupAvatarEdetingSelector,
-  async (avatar) => {
-    try {
-      const respData = await api.updateUserAvatar(avatar);
-      userInfo.setUserAvatar(respData);
-    } catch (error) {
-      errorHandler('Ощибка обновления аватара пользователя', error);
-    } finally {
-      this.close();
-      avatarLinkFormValidate.resetValidation(false);
-    }
-  },
-  () => {}
-);
+const popupAvatarEdeting = new PopupWithForm(popupAvatarEdetingSelector, async (avatar) => {
+  try {
+    const respData = await api.updateUserAvatar(avatar);
+    userInfo.setUserAvatar(respData);
+  } catch (error) {
+    errorHandler('Ощибка обновления аватара пользователя', error);
+  } finally {
+    this.close();
+    avatarLinkFormValidate.resetValidation(false);
+  }
+});
 
 const popupWithImage = new PopupWithImage(popupWithImageSelector);
 
