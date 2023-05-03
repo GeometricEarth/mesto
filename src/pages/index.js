@@ -28,10 +28,6 @@ const buttonEditingProfile = document.querySelector(buttonOpenProfilePopupSelect
 const buttonShowNewPlacePopup = document.querySelector(buttonOpenNewPlacePopupSelector);
 const avatarOverlay = document.querySelector(avatarOverlaySelector);
 
-const profilePopuplForm = document.forms.profileModalForm;
-const newPlaceForm = document.forms.newPlaceForm;
-const avatarLinkForm = document.forms.avatarEdetingForm;
-
 const api = new API(
   'https://mesto.nomoreparties.co/v1/cohort-65/',
   '3ad7048e-a39e-4977-8a2a-b13e574881a8'
@@ -50,7 +46,7 @@ async function loadPageData() {
   }
 }
 
-const profilePopupFormValidate = new FormValidator(validationConfig, profilePopuplForm);
+const profilePopupFormValidate = new FormValidator(validationConfig, profileModalForm);
 const newPlaceFormValidate = new FormValidator(validationConfig, newPlaceForm);
 const avatarLinkFormValidate = new FormValidator(validationConfig, avatarEdetingForm);
 profilePopupFormValidate.enableValidation();
