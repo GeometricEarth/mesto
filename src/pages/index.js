@@ -38,14 +38,15 @@ const api = new API(
 );
 
 const userInfo = new UserInfo(profileSelectors);
-getUserInfo();
 
-async function getUserInfo() {
+async function loadPageData() {
   try {
     const userData = await api.getUserInfo();
     userInfo.updateUserInfo(userData);
+    const cards = await api.getCards();
+    cardList.renderItems(cards);
   } catch (error) {
-    errorHandler('Ошибка обнавления профиля пользователя. Сервер ответил:', error);
+    errorHandler('Ошибка загрузки данных из api: ', error);
   }
 }
 
@@ -123,15 +124,6 @@ const cardList = new Section(gallerySelector, (data) => {
   renderCard(data);
 });
 
-(async function getCards() {
-  try {
-    const cards = await api.getCards();
-    cardList.renderItems(cards);
-  } catch (error) {
-    errorHandler('Ошибка загрузки списка карточек. Сервер ответил:', error);
-  }
-})();
-
 function handleCardClick(placeName, placeImage) {
   popupWithImage.open(placeName, placeImage);
 }
@@ -199,3 +191,5 @@ avatarOverlay.addEventListener('click', () => {
 function errorHandler(massege, error) {
   console.error(`${massege} ${error}`);
 }
+
+loadPageData();
