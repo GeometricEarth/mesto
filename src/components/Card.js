@@ -64,7 +64,7 @@ export default class Card {
   _setEventListeners(cardImageElement) {
     if (this._isOwner) {
       this._buttonDelete.addEventListener('click', (evt) => {
-        this._handleRemoveCard(this._id, evt);
+        this._handleRemoveCard(evt);
       });
     }
     this._buttonLikeElement = this._element.querySelector('.card__like-button');

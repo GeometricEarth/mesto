@@ -109,7 +109,7 @@ const popupAvatarEdeting = new PopupWithForm(
 
 const popupWithImage = new PopupWithImage(popupWithImageSelector);
 
-const popupWidthconfirm = new PopupWithConfirm(buttonConfirmSelector);
+const popupWidthConfirm = new PopupWithConfirm(buttonConfirmSelector);
 
 popupWithImage.setEventListeners();
 newPlacePopup.setEventListeners();
@@ -124,14 +124,18 @@ function handleCardClick(placeName, placeImage) {
   popupWithImage.open(placeName, placeImage);
 }
 
-async function handleRemoveCard(id, event) {
-  try {
-    await popupWidthconfirm.open();
-    await api.deleteCard(id);
-    event.target.closest('.card').remove();
-  } catch (error) {
-    console.warn(error);
-  }
+async function handleRemoveCard(event) {
+  popupWidthConfirm.setSubmitAction(async () => {
+    try {
+      await api.deleteCard(this._id);
+      popupWidthConfirm.close();
+      this._element.remove();
+      // event.target.closest('.card').remove();
+    } catch (error) {
+      console.warn(error);
+    }
+  });
+  popupWidthConfirm.open();
 }
 
 function renderCard(data) {
