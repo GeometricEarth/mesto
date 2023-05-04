@@ -124,16 +124,13 @@ function handleCardClick(placeName, placeImage) {
   popupWithImage.open(placeName, placeImage);
 }
 
-async function handleRemoveCard(event) {
+async function handleRemoveCard(card) {
   popupWidthConfirm.setSubmitAction(async () => {
     try {
-      await api.deleteCard(this._id);
+      await api.deleteCard(card.id);
+      card.deleteCard(); // this._element все еще фрагмент
       popupWidthConfirm.close();
-      this._element.remove();
-      // event.target.closest('.card').remove();
-    } catch (error) {
-      console.warn(error);
-    }
+    } catch (error) {}
   });
   popupWidthConfirm.open();
 }
