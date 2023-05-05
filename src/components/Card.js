@@ -10,21 +10,24 @@ export default class Card {
   ) {
     this._placeName = name;
     this._placeImage = link;
-    this.id = _id;
+    this._id = _id;
     this._owner = owner;
     this._likes = likes;
     this._showPopup = handleCardClick;
     this._handleRemoveCard = handleRemoveCard;
     this._handleLikeCard = handleLikeCard;
     this._handleDeleteLike = handleDeleteLikeFromCard;
-    this._templateSelecotr = templateSelector;
+    this._templateSelector = templateSelector;
     this._likeCountSelector = likeCountSelector;
     this._userId = userId;
     this._isOwner = this._owner._id === this._userId;
   }
 
   _getTemplate() {
-    return document.querySelector(this._templateSelecotr).content.cloneNode(true);
+    return document
+      .querySelector(this._templateSelector)
+      .content.querySelector('.card')
+      .cloneNode(true);
   }
 
   createCard() {
@@ -69,7 +72,7 @@ export default class Card {
   _setEventListeners(cardImageElement) {
     if (this._isOwner) {
       this._buttonDelete.addEventListener('click', (evt) => {
-        this._handleRemoveCard(this);
+        this._handleRemoveCard();
       });
     }
     this._buttonLikeElement = this._element.querySelector('.card__like-button');
