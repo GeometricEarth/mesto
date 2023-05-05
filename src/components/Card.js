@@ -17,14 +17,17 @@ export default class Card {
     this._handleRemoveCard = handleRemoveCard;
     this._handleLikeCard = handleLikeCard;
     this._handleDeleteLike = handleDeleteLikeFromCard;
-    this._templateSelecotr = templateSelector;
+    this._templateSelector = templateSelector;
     this._likeCountSelector = likeCountSelector;
     this._userId = userId;
     this._isOwner = this._owner._id === this._userId;
   }
 
   _getTemplate() {
-    return document.querySelector(this._templateSelecotr).content.cloneNode(true);
+    return document
+      .querySelector(this._templateSelector)
+      .content.querySelector('.card')
+      .cloneNode(true);
   }
 
   createCard() {
@@ -61,16 +64,21 @@ export default class Card {
     this._likes = likesList;
   }
 
+  deleteCard() {
+    this._element.remove();
+    this._element = null;
+  }
+
   _setEventListeners(cardImageElement) {
     if (this._isOwner) {
       this._buttonDelete.addEventListener('click', (evt) => {
-        this._handleRemoveCard(this._id, evt);
+        this._handleRemoveCard();
       });
     }
     this._buttonLikeElement = this._element.querySelector('.card__like-button');
     this._buttonLikeElement.addEventListener('click', (event) => {
       const isLikeSet = this._likes.some((element) => element._id === this._userId);
-      isLikeSet ? this._handleDeleteLike(this._id) : this._handleLikeCard(this._id);
+      isLikeSet ? this._handleDeleteLike(this.id) : this._handleLikeCard(this.id);
     });
     cardImageElement.addEventListener('click', () => {
       this._showPopup(this._placeName, this._placeImage);
