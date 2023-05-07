@@ -2,15 +2,14 @@ import './index.css';
 import {
   validationConfig,
   profileSelectors,
+  cardSelectors,
   gallerySelector,
   profilePopupSelector,
   newPlacePopupSelector,
   popupWithImageSelector,
-  cardTemplateSelector,
   buttonOpenProfilePopupSelector,
   buttonOpenNewPlacePopupSelector,
   buttonConfirmSelector,
-  likeCountSelector,
   popupAvatarEdetingSelector,
   avatarOverlaySelector,
 } from '../utils/constants.js';
@@ -143,12 +142,11 @@ function renderCard(data, isReverseDirection) {
 
   const card = new Card(
     data,
-    cardTemplateSelector,
+    cardSelectors,
     handleCardClick,
     handleRemoveCard,
     handleLikeCard,
-    handleDeleteLikeFromCard,
-    likeCountSelector
+    handleDeleteLikeFromCard
   );
   cardList.addItem(card.createCard(), isReverseDirection);
 }

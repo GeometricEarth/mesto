@@ -12,14 +12,24 @@ export const profileSelectors = {
   avatarSelector: '.profile__avatar',
 };
 
+export const cardSelectors = {
+  templateSelector: '#templateCard',
+  cardSelector: '.card',
+  imageSelector: '.card__image',
+  titleSelector: '.card__title',
+  likeButtonSelector: '.card__like-button',
+  likeButtonActiveClass: 'card__like-button_active',
+  likeCountSelector: '.card__like-count',
+  deleteButtonSelector: '.button_type_delite',
+  deleteButtonHiddenClass: 'button_hidden',
+};
+
 export const gallerySelector = '.gallery__card-list';
 export const profilePopupSelector = '.popup_type_edit-profile';
 export const newPlacePopupSelector = '.popup_type_add-place';
 export const popupWithImageSelector = '.popup_type_image-scaling';
 export const popupAvatarEdetingSelector = '.popup_type_avatar-edeting';
 export const avatarOverlaySelector = '.profile__avatar-wraper';
-export const cardTemplateSelector = '#templateCard';
-export const likeCountSelector = '.card__like-count';
 export const buttonOpenProfilePopupSelector = '.button_type_edit';
 export const buttonOpenNewPlacePopupSelector = '.button_type_add';
 export const buttonConfirmSelector = '.popup_type_confirm';
