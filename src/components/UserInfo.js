@@ -1,23 +1,4 @@
 export default class UserInfo {
-<<<<<<< HEAD
-  constructor(nameSelector, occupationSelector) {
-    this._nameElement = document.querySelector(nameSelector);
-    this._occupationElement = document.querySelector(occupationSelector);
-  }
-
-  getUserInfo() {
-    const state = {
-      userName: this._nameElement.textContent,
-      userOccupation: this._occupationElement.textContent,
-    };
-
-    return state;
-  }
-
-  setUserInfo({ userName, userOccupation }) {
-    this._nameElement.textContent = userName;
-    this._occupationElement.textContent = userOccupation;
-=======
   constructor({ nameSelector, occupationSelector, avatarSelector }) {
     this._nameElement = document.querySelector(nameSelector);
     this._occupationElement = document.querySelector(occupationSelector);
@@ -63,6 +44,5 @@ export default class UserInfo {
     this._nameElement.textContent = this._userName;
     this._occupationElement.textContent = this._userOccupation;
     this._userAvatarElement.src = this._userAvatar;
->>>>>>> develop
   }
 }

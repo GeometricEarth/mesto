@@ -1,15 +1,7 @@
 import './index.css';
-<<<<<<< HEAD
-import { initialCards } from '../utils/defaultsCards.js';
-import {
-  validationConfig,
-  userNameSelector,
-  userOccupationSelector,
-=======
 import {
   validationConfig,
   profileSelectors,
->>>>>>> develop
   gallerySelector,
   profilePopupSelector,
   newPlacePopupSelector,
@@ -17,10 +9,6 @@ import {
   cardTemplateSelector,
   buttonOpenProfilePopupSelector,
   buttonOpenNewPlacePopupSelector,
-<<<<<<< HEAD
-} from '../utils/constants.js';
-
-=======
   buttonConfirmSelector,
   likeCountSelector,
   popupAvatarEdetingSelector,
@@ -28,54 +16,12 @@ import {
 } from '../utils/constants.js';
 
 import API from '../components/API.js';
->>>>>>> develop
 import UserInfo from '../components/UserInfo';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
-<<<<<<< HEAD
-
-const buttonEditingProfile = document.querySelector(buttonOpenProfilePopupSelector);
-const buttonShowNewPlacePopup = document.querySelector(buttonOpenNewPlacePopupSelector);
-
-const profilePopuplForm = document.forms.profileModalForm;
-const newPlaceForm = document.forms.newPlaceForm;
-
-const userInfo = new UserInfo(userNameSelector, userOccupationSelector);
-
-const profilePopuplFormValidate = new FormValidator(validationConfig, profilePopuplForm);
-const newPlaceFormValidate = new FormValidator(validationConfig, newPlaceForm);
-profilePopuplFormValidate.enableValidation();
-newPlaceFormValidate.enableValidation();
-
-const profilePopup = new PopupWithForm(profilePopupSelector, (data) => {
-  userInfo.setUserInfo(data);
-  profilePopup.close();
-});
-
-const newPlacePopup = new PopupWithForm(newPlacePopupSelector, (data) => {
-  renderCard(data);
-  newPlacePopup.close();
-});
-const popupWithImage = new PopupWithImage(popupWithImageSelector);
-popupWithImage.setEventListeners();
-newPlacePopup.setEventListeners();
-profilePopup.setEventListeners();
-
-const cardList = new Section(
-  {
-    items: initialCards,
-    renderer: (data) => {
-      renderCard(data);
-    },
-  },
-  gallerySelector
-);
-
-cardList.renderItems();
-=======
 import PopupWithConfirm from '../components/PopupWithConfirmation';
 
 const buttonEditingProfile = document.querySelector(buttonOpenProfilePopupSelector);
@@ -173,21 +119,11 @@ popupAvatarEdeting.setEventListeners();
 const cardList = new Section(gallerySelector, (data) => {
   renderCard(data, true);
 });
->>>>>>> develop
 
 function handleCardClick(placeName, placeImage) {
   popupWithImage.open(placeName, placeImage);
 }
 
-<<<<<<< HEAD
-function renderCard(data) {
-  const card = new Card(data, cardTemplateSelector, handleCardClick);
-  cardList.addItem(card.createCard());
-}
-
-buttonEditingProfile.addEventListener('click', () => {
-  profilePopup.setInputValues(userInfo.getUserInfo());
-=======
 async function handleRemoveCard() {
   popupWithConfirm.setSubmitAction(async () => {
     try {
@@ -239,7 +175,6 @@ buttonEditingProfile.addEventListener('click', () => {
   const { name, about } = userInfo.getUserInfo();
   profilePopup.setInputValues({ name, about });
 
->>>>>>> develop
   profilePopup.open();
 });
 
@@ -247,8 +182,6 @@ buttonShowNewPlacePopup.addEventListener('click', () => {
   newPlaceFormValidate.checkSubmitButtonState();
   newPlacePopup.open();
 });
-<<<<<<< HEAD
-=======
 
 avatarOverlay.addEventListener('click', () => {
   popupAvatarEdeting.open();
@@ -259,4 +192,3 @@ function errorHandler(massege, error) {
 }
 
 loadPageData();
->>>>>>> develop

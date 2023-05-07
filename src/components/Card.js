@@ -1,15 +1,4 @@
 export default class Card {
-<<<<<<< HEAD
-  constructor(data, templateSelector, handleCardClick) {
-    this._placeName = data.placeName;
-    this._placeImage = data.placeImage;
-    this._showPopup = handleCardClick;
-    this._templateSelecotr = templateSelector;
-  }
-
-  _getTemplate() {
-    return document.querySelector(this._templateSelecotr).content.cloneNode(true);
-=======
   constructor(
     { name, link, _id, owner, likes, userId },
     templateSelector,
@@ -39,16 +28,10 @@ export default class Card {
       .querySelector(this._templateSelector)
       .content.querySelector('.card')
       .cloneNode(true);
->>>>>>> develop
   }
 
   createCard() {
     this._element = this._getTemplate();
-<<<<<<< HEAD
-    const cardImageElement = this._element.querySelector('.card__image');
-    cardImageElement.alt = this._placeName;
-    cardImageElement.src = this._placeImage;
-=======
     this._buttonDelete = this._element.querySelector('.button_type_delite');
 
     const cardImageElement = this._element.querySelector('.card__image');
@@ -57,23 +40,11 @@ export default class Card {
     if (!this._isOwner) {
       this._buttonDelete.classList.add('button_hidden');
     }
->>>>>>> develop
 
     this._element.querySelector('.card__title').innerText = this._placeName;
 
     this._setEventListeners(cardImageElement);
 
-<<<<<<< HEAD
-    return this._element;
-  }
-
-  _setEventListeners(cardImageElement) {
-    const buttonDelite = this._element.querySelector('.button_type_delite');
-    const buttonLike = this._element.querySelector('.card__like-button');
-
-    buttonDelite.addEventListener('click', this._handleRemoveCard);
-    buttonLike.addEventListener('click', this._handleLikeCard);
-=======
     this._likesCountElement = this._element.querySelector(this._likeCountSelector);
 
     this._likesCountElement.innerText = this._likes.length;
@@ -109,20 +80,8 @@ export default class Card {
       const isLikeSet = this._likes.some((element) => element._id === this._userId);
       isLikeSet ? this._handleDeleteLike(this._id) : this._handleLikeCard(this._id);
     });
->>>>>>> develop
     cardImageElement.addEventListener('click', () => {
       this._showPopup(this._placeName, this._placeImage);
     });
   }
-<<<<<<< HEAD
-
-  _handleRemoveCard(event) {
-    event.target.closest('.card').remove();
-  }
-
-  _handleLikeCard(event) {
-    event.target.classList.toggle('card__like-button_active');
-  }
-=======
->>>>>>> develop
 }
