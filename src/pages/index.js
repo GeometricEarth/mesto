@@ -182,6 +182,7 @@ buttonShowNewPlacePopup.addEventListener('click', () => {
 });
 
 avatarOverlay.addEventListener('click', () => {
+  avatarLinkFormValidate.checkSubmitButtonState();
   popupAvatarEdeting.open();
 });
 
