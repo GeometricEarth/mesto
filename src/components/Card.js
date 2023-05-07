@@ -40,6 +40,10 @@ export default class Card {
 
     cardImageElement.alt = this._placeName;
     cardImageElement.src = this._placeImage;
+    cardImageElement.onerror = () => {
+      this._element.remove();
+      console.log(`Карточка скрыта из-за ошибки загрузки изображения: ${this._placeImage}`);
+    };
 
     if (!this._isOwner) {
       this._buttonDeleteElement.classList.add(this._selectors.deleteButtonHiddenClass);
