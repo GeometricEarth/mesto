@@ -77,7 +77,7 @@ const newPlacePopup = new PopupWithForm(
     try {
       newPlacePopup.waitingForResponse(true);
       const resData = await api.addCard(data);
-      renderCard(resData);
+      renderCard(resData, false);
     } catch (error) {
       console.error(`Ошибка: ${error}`);
     } finally {
@@ -117,7 +117,7 @@ profilePopup.setEventListeners();
 popupAvatarEdeting.setEventListeners();
 
 const cardList = new Section(gallerySelector, (data) => {
-  renderCard(data);
+  renderCard(data, true);
 });
 
 function handleCardClick(placeName, placeImage) {
@@ -137,7 +137,7 @@ async function handleRemoveCard() {
   popupWithConfirm.open();
 }
 
-function renderCard(data) {
+function renderCard(data, isReverseDirection) {
   const userData = userInfo.getUserInfo();
   data.userId = userData.userId;
 
@@ -150,7 +150,7 @@ function renderCard(data) {
     handleDeleteLikeFromCard,
     likeCountSelector
   );
-  cardList.addItem(card.createCard());
+  cardList.addItem(card.createCard(), isReverseDirection);
 }
 
 async function handleLikeCard(id) {
