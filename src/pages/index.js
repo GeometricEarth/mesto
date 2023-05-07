@@ -77,10 +77,10 @@ const newPlacePopup = new PopupWithForm(
       newPlacePopup.waitingForResponse(true);
       const resData = await api.addCard(data);
       renderCard(resData, false);
+      newPlacePopup.close();
     } catch (error) {
       console.error(`Ошибка: ${error}`);
     } finally {
-      newPlacePopup.close();
       newPlacePopup.waitingForResponse(false);
       newPlaceFormValidate.resetValidation(false);
     }
@@ -95,10 +95,10 @@ const popupAvatarEdeting = new PopupWithForm(
       newPlacePopup.waitingForResponse(true);
       const respData = await api.updateUserAvatar(avatar);
       userInfo.setUserAvatar(respData);
-    } catch (error) {
-      errorHandler('Ощибка обновления аватара пользователя', error);
-    } finally {
       popupAvatarEdeting.close();
+    } catch (error) {
+      errorHandler('Ошибка обновления аватара пользователя', error);
+    } finally {
       newPlacePopup.waitingForResponse(false);
       avatarLinkFormValidate.resetValidation(false);
     }
