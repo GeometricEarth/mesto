@@ -78,7 +78,7 @@ export default class Card {
     this._buttonLikeElement = this._element.querySelector('.card__like-button');
     this._buttonLikeElement.addEventListener('click', (event) => {
       const isLikeSet = this._likes.some((element) => element._id === this._userId);
-      isLikeSet ? this._handleDeleteLike(this.id) : this._handleLikeCard(this.id);
+      isLikeSet ? this._handleDeleteLike(this._id) : this._handleLikeCard(this._id);
     });
     cardImageElement.addEventListener('click', () => {
       this._showPopup(this._placeName, this._placeImage);
