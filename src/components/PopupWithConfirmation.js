@@ -13,12 +13,4 @@ export default class PopupWithConfirm extends Popup {
   setSubmitAction(action) {
     this._handleFormSubmit = action;
   }
-
-  open() {
-    super.open();
-  }
-
-  close() {
-    super.close();
-  }
 }
