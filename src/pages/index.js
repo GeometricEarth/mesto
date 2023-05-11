@@ -52,59 +52,32 @@ profilePopupFormValidate.enableValidation();
 newPlaceFormValidate.enableValidation();
 avatarLinkFormValidate.enableValidation();
 
-const profilePopup = new PopupWithForm(
-  profilePopupSelector,
-  async (data) => {
-    try {
-      newPlacePopup.waitingForResponse(true);
-      const userData = await api.patchUserInfo(data);
-      userInfo.setUserInfo(userData);
-    } catch (error) {
-      errorHandler('Ошибка обнавления профиля пользователя. Сервер ответил:', error);
-    } finally {
-      profilePopup.close();
-      newPlacePopup.waitingForResponse(false);
-      profilePopupFormValidate.resetValidation(true);
-    }
-  },
-  { defaultState: 'Сохранить', waitingState: 'Сохранение...' }
-);
+const profilePopup = new PopupWithForm(profilePopupSelector, async (data) => {
+  try {
+    const userData = await api.patchUserInfo(data);
+    userInfo.setUserInfo(userData);
+  } catch (error) {
+    errorHandler('Ошибка обнавления профиля пользователя. Сервер ответил:', error);
+  }
+});
 
-const newPlacePopup = new PopupWithForm(
-  newPlacePopupSelector,
-  async (data) => {
-    try {
-      newPlacePopup.waitingForResponse(true);
-      const resData = await api.addCard(data);
-      renderCard(resData, false);
-      newPlacePopup.close();
-    } catch (error) {
-      console.error(`Ошибка: ${error}`);
-    } finally {
-      newPlacePopup.waitingForResponse(false);
-      newPlaceFormValidate.resetValidation(false);
-    }
-  },
-  { defaultState: 'Создать', waitingState: 'Создание...' }
-);
+const newPlacePopup = new PopupWithForm(newPlacePopupSelector, async (data) => {
+  try {
+    const resData = await api.addCard(data);
+    renderCard(resData, false);
+  } catch (error) {
+    console.error(`Ошибка: ${error}`);
+  }
+});
 
-const popupAvatarEdeting = new PopupWithForm(
-  popupAvatarEdetingSelector,
-  async (avatar) => {
-    try {
-      newPlacePopup.waitingForResponse(true);
-      const respData = await api.updateUserAvatar(avatar);
-      userInfo.setUserAvatar(respData);
-      popupAvatarEdeting.close();
-    } catch (error) {
-      errorHandler('Ошибка обновления аватара пользователя', error);
-    } finally {
-      newPlacePopup.waitingForResponse(false);
-      avatarLinkFormValidate.resetValidation(false);
-    }
-  },
-  { defaultState: 'Сохранить', waitingState: 'Сохранение...' }
-);
+const popupAvatarEdeting = new PopupWithForm(popupAvatarEdetingSelector, async (avatar) => {
+  try {
+    const respData = await api.updateUserAvatar(avatar);
+    userInfo.setUserAvatar(respData);
+  } catch (error) {
+    errorHandler('Ошибка обновления аватара пользователя', error);
+  }
+});
 
 const popupWithImage = new PopupWithImage(popupWithImageSelector);
 
@@ -172,17 +145,17 @@ async function handleDeleteLikeFromCard(id) {
 buttonEditingProfile.addEventListener('click', () => {
   const { name, about } = userInfo.getUserInfo();
   profilePopup.setInputValues({ name, about });
-
+  profilePopupFormValidate.resetValidation(true);
   profilePopup.open();
 });
 
 buttonShowNewPlacePopup.addEventListener('click', () => {
-  newPlaceFormValidate.checkSubmitButtonState();
+  newPlaceFormValidate.resetValidation(false);
   newPlacePopup.open();
 });
 
 avatarOverlay.addEventListener('click', () => {
-  avatarLinkFormValidate.checkSubmitButtonState();
+  avatarLinkFormValidate.resetValidation(false);
   popupAvatarEdeting.open();
 });
 
